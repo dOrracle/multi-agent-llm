@@ -1,6 +1,6 @@
 import asyncio
 from concurrent.futures import Future, ThreadPoolExecutor, TimeoutError, wait
-from typing import Any, Generic, List, Optional, Type, TypeVar
+from typing import Any, Generic, List, Optional, Type, TypeVar, Callable
 
 import nest_asyncio
 from pydantic import BaseModel, Field
@@ -62,6 +62,23 @@ class ToolRequest(BaseModel):
     )
 
 
+class ToolResponse(BaseModel):
+    code: str = Field(
+        ...,
+        description=(
+            "Python code that implements and evaluates the tool, printing its output to stdout. "
+            "For example, this might be a series of imports, followed by a function definition, "
+            "and then a call to that function with the provided input data. The function's output "
+            "should be printed to stdout. This output should be a JSON-serializable object at "
+            "can be passed back to an LLM agent for further processing."
+        )
+    )
+    pip_dependencies: Optional[List[str]] = Field(
+        None,
+        description="List of pip dependencies required to run the tool"
+    )
+
+
 class BrainIteration(BaseModel):
     self_thought: str = Field(
         ...,
@@ -98,6 +115,19 @@ class LLMResponseIteration(BaseModel):
         description="Response to the inner cognitive brain's discussion for the current iteration",
     )
 
+
+tool_gen_agent = Agent(
+    name="Tool Generator Agent",
+
+    role="""\
+You are a Tool Generator Agent responsible for creating tools that can assist the \
+Cognitive Reflection Agent in guiding the LLM Agent.""",
+
+    function="""\
+Generate Python code that implements a tool based on the Cognitive Reflection Agent's request. \
+Consider the tool's name, description, and desired inputs to create the Python function. \
+Ensure that the function you create can accept the input data provided."""
+)
 
 brain_agent = Agent(
     name="Cognitive Reflection Agent",
@@ -143,6 +173,9 @@ a detailed description of the desired tool, and the input data to be used with t
 This information will be forwarded to a Tool Generator agent who will implement and evaluate the tool, \
 then provide you with the tools output.
 
+Do not waste iterations requesting too many tools, as this will stall the iteration loop and delay the \
+final answer to the query.
+
 If you decide that the LLM has delivered a complete answer, conclude the iteration by setting \
 `iteration_stop` to True in your response.
 
@@ -187,12 +220,19 @@ class AIOT(Generic[T]):
         llm: LLMBase,
         iterations: int = 5,
         answer_schema: Optional[Type[T]] = None,
+        tool_runner: Optional[Callable[[str, Optional[List[str]]], str]] = None,
+        interactive: bool = False,
     ):
         self.llm = llm
         self.max_iterations = iterations
         self.answer_schema = answer_schema or str
-        self.brain_agent = self._create_brain_agent()
-        self.llm_agent = self._create_llm_agent()
+        self.tool_runner = tool_runner
+        self.interactive = interactive
+
+        self.brain_agent = brain_agent
+        self.llm_agent = llm_agent
+        self.tool_gen_agent = tool_gen_agent
+
         self._loop = asyncio.get_event_loop()
         self._executor = ThreadPoolExecutor(max_workers=1)
 
@@ -208,12 +248,6 @@ class AIOT(Generic[T]):
             )
 
         return LLMResponse
-
-    def _create_brain_agent(self):
-        return brain_agent
-
-    def _create_llm_agent(self):
-        return llm_agent
 
     def _create_context(self, query: str):
         return {
@@ -245,19 +279,27 @@ class AIOT(Generic[T]):
         answer_to_query = False
 
         while (
-            iteration <= self.max_iterations and not completed and not answer_to_query
+            iteration <= self.max_iterations
+            and not completed and not answer_to_query
         ):
             brain_ans = await self._brain_iteration(context, iteration)
             if brain_ans is None:
                 print("Brain iteration failed. Ending discussion.")
                 break
 
-            #
-            # TODO: check for plan to use tool here?
-            #
-            # - brain needs to know that that's an option
-            # - need to plug in service that runs tool on given input
-            #
+            while (
+                self.tool_runner is not None
+                and brain_ans.tool_request is not None
+            ):
+                # Enter tool evaluation loop.
+                print("Received tool request from the brain.")
+                tool_response = await self._tool_iteration(brain_ans.tool_request)
+
+                # TODO: use async function here?
+                tool_response_content = self._run_tool_and_format_output(tool_response)
+                context["prompt_history"] += tool_response_content
+
+                brain_ans = await self._brain_iteration(context, iteration)
 
             completed = brain_ans.iteration_stop
 
@@ -310,6 +352,26 @@ class AIOT(Generic[T]):
         formatted_prompt = self.llm.format_prompt(system_prompt, user_prompt)
         return await self.llm.generate_async(formatted_prompt, self.get_llm_schema())
 
+    async def _tool_iteration(self, tool_request: ToolRequest):
+        tool_gen_prompt = (
+            "Generate a tool with the following details:\n"
+            f"Name: {tool_request.name}\n"
+            f"Description: {tool_request.description}\n"
+            f"Input: {tool_request.input}\n"
+        )
+        system_prompt, user_prompt = self.tool_gen_agent.prompt(tool_gen_prompt)
+        formatted_prompt = self.llm.format_prompt(system_prompt, user_prompt)
+        return await self.llm.generate_async(formatted_prompt, ToolResponse)
+
+    def _run_tool_and_format_output(self, tool_request: ToolRequest) -> str:
+        if self.tool_runner is None:
+            raise ValueError("Tool runner function not provided.")
+
+        tool_response = self.tool_runner(
+            tool_request.description,
+            tool_request.input,
+        )
+        return f"The requested tool was generated and evaluated. Here is the output:\n\n{tool_response}"
 
 class GIOT(Generic[T]):
     def __init__(
