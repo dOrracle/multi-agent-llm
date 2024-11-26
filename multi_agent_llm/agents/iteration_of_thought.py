@@ -43,16 +43,47 @@ class BlockingFuture:
         return self._future.result()
 
 
+class ToolRequest(BaseModel):
+    name: str = Field(
+        ...,
+        description="Name of the tool to be used to help the LLM with the query"
+    )
+    description: str = Field(
+        ...,
+        description=(
+            "A complete description of the desired tool. "
+            "This description should be detailed enough to suffice as input for a "
+            "code-generator agent who will create a Python function that implements the tool."
+        )
+    )
+    input: Any = Field(
+        ...,
+        description="Input data to be used with the generated tool to help the LLM with the query"
+    )
+
+
 class BrainIteration(BaseModel):
     self_thought: str = Field(
         ...,
-        description="Guide the LLM with instructions on how to approach the query for the current iteration based on history.",
+        description=(
+            "Guide the LLM with instructions on how to approach the query for the "
+            "current iteration based on history."
+        ),
     )
     iteration_stop: bool = Field(
         ...,
-        description="False for continue, True to stop the iteration as LLM has given the final confident answer for the query",
+        description=(
+            "False for continue, True to stop the iteration as LLM has "
+            "given the final confident answer for the query"
+        ),
     )
-
+    tool_request: Optional[ToolRequest] = Field(
+        None,
+        description=(
+            "Optional request to utilize a tool with a specific input "
+            "to help the LLM with the query"
+        )
+    )
 
 class ConversationTurn(BaseModel):
     iteration: int
@@ -70,20 +101,83 @@ class LLMResponseIteration(BaseModel):
 
 brain_agent = Agent(
     name="Cognitive Reflection Agent",
-    role="""You are an internal guide responsible for ensuring the LLM thoroughly understands and solves complex questions. Your primary task is to bring forth all relevant domain-specific knowledge necessary for the LLM to address the query accurately. At each step of the reasoning process, you provide the LLM with targeted prompts that correct any misconceptions, reinforce correct thinking, and introduce essential knowledge it may be overlooking. When the LLM struggles or deviates, you ensure it has access to the precise information needed to think through the problem effectively. Do not provide factually wrong insights to the LLM. If you are unsure and not confident of the answer/solution, always iterate until the LLM within maximum iterations. Your guidance prompt should be detailed and informative. Always encourage iterating with the llm over arriving at a final answer too soon.""",
-    function="""Guide the LLM in accurately and efficiently solving queries by supplying all relevant domain-specific knowledge required for the task. Identify any areas where the LLM may be struggling or reasoning incorrectly, and intervene with prompts that bring in the critical information needed to correct its course. Ensure the LLM fully comprehends the query by continuously providing the necessary background, concepts, and techniques specific to the domain of the question. Your goal is to refine the LLM's reasoning process step-by-step, ensuring each response builds on the previous one, until the LLM reaches a comprehensive and accurate solution. Conclude the iteration by setting iteration_stop to True once the LLM delivers a complete and accurate answer.
-    Based on this analysis, generate a follow-up prompt that guides the LLM to the next step in the reasoning process. Use a structured approach, ensuring that each prompt builds upon the previous one (or corrects it) and moves the LLM closer to an accurate answer quickly with as little iterations as possible. Be sure to read through the query thoroughly and make the LLM understand every word of query thoroughly as well. 
-    Here are some examples of iterative instructions you can use, depending on the context of the query or/and the LLM's previous response:
-    "What techniques or methods do you know that you can use to answer this question or solve this problem?"
-    "How can you integrate what you already know and recall more valuable facts, approaches, and techniques?"
-    "Can you elaborate on [specific aspect of the previous response]?"
-    "Are there any alternative perspectives or solutions you could consider?"
-    "How can you verify the accuracy or validity of your current answer?""",
+
+    role="""\
+You are an internal guide responsible for ensuring another LLM Agent thoroughly \
+understands and solves complex questions. Your primary task is to bring forth all \
+relevant domain-specific knowledge necessary for the LLM Agent to address the query accurately.
+
+You also have the option to request a tool to be used to help with the above. \
+Any tool requests will be forwarded to a Tool Generator agent who will implement and evaluate \
+the tool dynamically.
+
+At each step of the reasoning process, you will provide the LLM Agent with targeted prompts \
+that correct any misconceptions, reinforce correct thinking, and introduce essential \
+knowledge that it may be overlooking. When the LLM Agent struggles or deviates, you ensure it has \
+access to the precise information needed to think through the problem effectively.
+
+Do not provide factually wrong insights to the LLM Agent. If you are unsure and not confident of \
+the answer/solution, always iterate until the LLM Agent reaches maximum iterations. \
+Your guidance prompt should be detailed and informative. \
+Always encourage iterating with the LLM Agent over arriving at a final answer too soon.""",
+
+    function="""\
+Guide the LLM Agent in accurately and efficiently solving queries by supplying all \
+relevant domain-specific knowledge required for the task. Identify any areas where the LLM \
+agent may be struggling or reasoning incorrectly, and intervene with prompts that provide \
+the critical information needed to correct its course. Ensure the LLM Agent fully comprehends the \
+query by continuously providing the necessary background, concepts, and techniques specific \
+to the domain of the question. Your goal is to refine the LLM Agent's reasoning process \
+step-by-step, ensuring each response builds on the previous one, until the LLM Agent reaches a \
+comprehensive and accurate solution.
+
+Based on this analysis, generate a follow-up prompt that guides the LLM Agent to the next step in \
+the reasoning process. Use a structured approach, ensuring that each prompt builds upon the \
+previous one (or corrects it) and moves the LLM Agent closer to an accurate answer quickly with as \
+little iterations as possible. Be sure to read through the query thoroughly and make the LLM \
+agent understand every word of query thoroughly as well.
+
+If you decide that you need a tool to be used to help with the above, you can request it by \
+providing a `tool_request` in your response. The tool request should include the name of the tool, \
+a detailed description of the desired tool, and the input data to be used with the generated tool. \
+This information will be forwarded to a Tool Generator agent who will implement and evaluate the tool, \
+then provide you with the tools output.
+
+If you decide that the LLM has delivered a complete answer, conclude the iteration by setting \
+`iteration_stop` to True in your response.
+
+Here are some examples of iterative instructions you can use, depending on the context of the \
+query or/and the LLM Agent's previous response:
+"What techniques or methods do you know that you can use to answer this question or solve this problem?"
+"How can you integrate what you already know and recall more valuable facts, approaches, and techniques?"
+"Can you elaborate on [specific aspect of the previous response]?"
+"Are there any alternative perspectives or solutions you could consider?"
+"How can you verify the accuracy or validity of your current answer?"""
 )
+
 llm_agent = Agent(
     name="LLM",
-    role="""You are a knowledgeable and articulate language model designed to collaborate with an Inner Cognitive Brain to provide well-reasoned and accurate answers to complex questions. Guided by the facilitator's prompts, you leverage your extensive knowledge base and reasoning capabilities to formulate insightful responses. If you encounter uncertainty or identify gaps in your knowledge, reasoning, or logic, clearly indicate these areas. If you are unsure and not confident of the answer/solution, always iterate with the Cognitive Brain until maximum iterations. Provide detailed and comprehensive information as needed, ensuring that your answers are thorough without being verbose. Always encourage iterating with the brain over arriving at a final answer too soon.""",
-    function="""Receive and process prompts from the Inner Cognitive Brain, retrieving relevant knowledge and applying logical reasoning to address the query. If you identify gaps in your knowledge, reasoning, or logic, make these explicit in your response. Ensure your answers are clear, detailed, and directly address the prompt. Collaborate iteratively with the Inner Cognitive Brain, refining your answers until a satisfactory and accurate response is achieved. Provide comprehensive explanations where necessary, focusing on delivering thorough and precise information without being verbose. If you have reached maximum iterations, please give back a final definitive answer to the query by picking one of the options.""",
+
+    role="""\
+You are a knowledgeable and articulate language model designed to collaborate with an \
+Inner Cognitive Brain to provide well-reasoned and accurate answers to complex questions. \
+Guided by the facilitator's prompts, you leverage your extensive knowledge base and \
+reasoning capabilities to formulate insightful responses. If you encounter uncertainty \
+or identify gaps in your knowledge, reasoning, or logic, clearly indicate these areas. \
+If you are unsure and not confident of the answer/solution, always iterate with the \
+Cognitive Brain until maximum iterations. Provide detailed and comprehensive information \
+as needed, ensuring that your answers are thorough without being verbose. \
+Always encourage iterating with the brain over arriving at a final answer too soon.""",
+
+    function="""\
+Receive and process prompts from the Inner Cognitive Brain, retrieving relevant knowledge \
+and applying logical reasoning to address the query. If you identify gaps in your knowledge, \
+reasoning, or logic, make these explicit in your response. Ensure your answers are clear, \
+detailed, and directly address the prompt. Collaborate iteratively with the \
+Inner Cognitive Brain, refining your answers until a satisfactory and accurate response \
+is achieved. Provide comprehensive explanations where necessary, focusing on delivering \
+thorough and precise information without being verbose. If you have reached maximum iterations, \
+please give back a final definitive answer to the query by picking one of the options."""
 )
 
 
@@ -157,6 +251,13 @@ class AIOT(Generic[T]):
             if brain_ans is None:
                 print("Brain iteration failed. Ending discussion.")
                 break
+
+            #
+            # TODO: check for plan to use tool here?
+            #
+            # - brain needs to know that that's an option
+            # - need to plug in service that runs tool on given input
+            #
 
             completed = brain_ans.iteration_stop
 
