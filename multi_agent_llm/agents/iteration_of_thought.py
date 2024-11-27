@@ -1,20 +1,17 @@
 import asyncio
-from concurrent.futures import Future, ThreadPoolExecutor, TimeoutError, wait
-from typing import Any, Generic, List, Optional, Type, TypeVar, Callable
+from concurrent.futures import Future, ThreadPoolExecutor, TimeoutError
+from typing import Any, Callable, Generic, List, Optional, Type, TypeVar
 
 import nest_asyncio
 from pydantic import BaseModel, Field
 
 from ..agent_class import Agent
 from ..llm import LLMBase
-from .base import DiscussionResult, MultiAgentBase
+from .base import DiscussionResult
 
 T = TypeVar("T")
 
 nest_asyncio.apply()
-
-
-from concurrent.futures import Future, TimeoutError
 
 
 class BlockingFuture:
@@ -101,6 +98,7 @@ class BrainIteration(BaseModel):
             "to help the LLM with the query"
         )
     )
+
 
 class ConversationTurn(BaseModel):
     iteration: int
@@ -220,7 +218,8 @@ class AIOT(Generic[T]):
         llm: LLMBase,
         iterations: int = 5,
         answer_schema: Optional[Type[T]] = None,
-        tool_runner: Optional[Callable[[str, Optional[List[str]]], str]] = None,
+        tool_runner: Optional[Callable[[
+            str, Optional[List[str]]], str]] = None,
         interactive: bool = False,
     ):
         self.llm = llm
@@ -296,7 +295,8 @@ class AIOT(Generic[T]):
                 tool_response = await self._tool_iteration(brain_ans.tool_request)
 
                 # TODO: use async function here?
-                tool_response_content = self._run_tool_and_format_output(tool_response)
+                tool_response_content = self._run_tool_and_format_output(
+                    tool_response)
                 context["prompt_history"] += tool_response_content
 
                 brain_ans = await self._brain_iteration(context, iteration)
@@ -338,7 +338,8 @@ class AIOT(Generic[T]):
         prompt_with_history = f"""{context["prompt_history"]}\n Current Iteration : {iteration}\n
         Make the LLM answer within maximum of {self.max_iterations} iterations\n\n Ideate first with LLM and guide the LLM towards the answer, considering the remaining iterations.\n\n.
         Talk and prompt LLM in second person directly as if you are discussing with the LLM to guide it towards the answer.\n"""
-        system_prompt, user_prompt = self.brain_agent.prompt(prompt_with_history)
+        system_prompt, user_prompt = self.brain_agent.prompt(
+            prompt_with_history)
         formatted_prompt = self.llm.format_prompt(system_prompt, user_prompt)
         return await self.llm.generate_async(formatted_prompt, BrainIteration)
 
@@ -361,7 +362,8 @@ class AIOT(Generic[T]):
             f"Description: {tool_request.description}\n"
             f"Input: {tool_request.input}\n"
         )
-        system_prompt, user_prompt = self.tool_gen_agent.prompt(tool_gen_prompt)
+        system_prompt, user_prompt = self.tool_gen_agent.prompt(
+            tool_gen_prompt)
         formatted_prompt = self.llm.format_prompt(system_prompt, user_prompt)
         return await self.llm.generate_async(formatted_prompt, ToolResponse)
 
@@ -374,6 +376,7 @@ class AIOT(Generic[T]):
             tool_response.pip_dependencies
         )
         return f"The requested tool was generated and evaluated. Here is the output:\n\n{tool_response_content}"
+
 
 class GIOT(Generic[T]):
     def __init__(
@@ -436,14 +439,16 @@ class GIOT(Generic[T]):
         for current_iteration in range(1, self.total_iterations + 1):
             brain_ans = await self._brain_iteration(context, current_iteration)
             if brain_ans is None:
-                print(f"Brain iteration {current_iteration} failed. Ending discussion.")
+                print(
+                    f"Brain iteration {current_iteration} failed. Ending discussion.")
                 break
 
             llm_ans = await self._llm_iteration(
                 context, brain_ans.self_thought, current_iteration
             )
             if llm_ans is None:
-                print(f"LLM iteration {current_iteration} failed. Ending discussion.")
+                print(
+                    f"LLM iteration {current_iteration} failed. Ending discussion.")
                 break
 
             context["conversation"].append(
@@ -477,7 +482,8 @@ class GIOT(Generic[T]):
             f"Chat and prompt LLM directly as if you are discussing with the LLM to guide it towards the answer.\n"
             f"Original query: {context['query']}\n"
         )
-        system_prompt, user_prompt = self.brain_agent.prompt(prompt_with_history)
+        system_prompt, user_prompt = self.brain_agent.prompt(
+            prompt_with_history)
         formatted_prompt = self.llm.format_prompt(system_prompt, user_prompt)
         return await self.llm.generate_async(formatted_prompt, BrainIteration)
 
