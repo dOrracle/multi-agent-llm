@@ -1,6 +1,6 @@
 import asyncio
 from concurrent.futures import Future, ThreadPoolExecutor, TimeoutError
-from typing import Any, Callable, Generic, List, Optional, Type, TypeVar
+from typing import Any, Callable, Generic, List, Optional, Type, TypeVar, Dict
 
 import nest_asyncio
 from pydantic import BaseModel, Field
@@ -53,8 +53,8 @@ class ToolRequest(BaseModel):
             "code-generator agent who will create a Python function that implements the tool."
         )
     )
-    input: Any = Field(
-        ...,
+    input: Optional[Dict[str, str | int | float | bool | list | dict]] = Field(
+        None,
         description="Input data to be used with the generated tool to help the LLM with the query"
     )
 
@@ -92,7 +92,7 @@ class BrainIteration(BaseModel):
         ),
     )
     tool_request: Optional[ToolRequest] = Field(
-        None,
+        ...,
         description=(
             "Optional request to utilize a tool with a specific input "
             "to help the LLM with the query"
@@ -170,6 +170,18 @@ providing a `tool_request` in your response. The tool request should include the
 a detailed description of the desired tool, and the input data to be used with the generated tool. \
 This information will be forwarded to a Tool Generator agent who will implement and evaluate the tool, \
 then provide you with the tools output.
+
+Reasons to initiate a tool request may include the following:
+
+    - the LLM agent explicitly says that it lacks access to certain information
+    - needing to fetch real-time data that is not available in the LLM's knowledge base
+    - needing to perform complex calculations or simulations
+    - needing to access external APIs or databases
+    - needing to verify solutions to easily-checked numerical problems
+    - needing to use a search engine to find relevant information
+
+If tool evaluation leads has led to an error, re-request the tool with an updated description to \
+address the issue.
 
 Do not waste iterations requesting too many tools, as this will stall the iteration loop \
 and delay the final answer to the query.
@@ -253,6 +265,7 @@ class AIOT(Generic[T]):
             "query": query,
             "prompt_history": f"**Important** Initial Query: {query}\n\n",
             "conversation": [],
+            "tool_outputs": {},
         }
 
     async def run_async(self, query: str) -> DiscussionResult[T]:
@@ -276,6 +289,7 @@ class AIOT(Generic[T]):
         iteration = 1
         completed = False
         answer_to_query = False
+        llm_ans = None
 
         while (
             iteration <= self.max_iterations
@@ -291,13 +305,18 @@ class AIOT(Generic[T]):
                 and brain_ans.tool_request is not None
             ):
                 # Enter tool evaluation loop.
-                print("Received tool request from the brain.")
+                print("💡 Received tool request from the brain.",
+                    brain_ans.tool_request.model_dump()
+                )
                 tool_response = await self._tool_iteration(brain_ans.tool_request)
 
+                print("💡 Tool Generated:\n", tool_response.code)
+
                 # TODO: use async function here?
-                tool_response_content = self._run_tool_and_format_output(
-                    tool_response)
-                context["prompt_history"] += tool_response_content
+                tool_response_content = self._get_tool_output(tool_response)
+                context["tool_outputs"][brain_ans.tool_request.name] = tool_response_content
+
+                print("💡 Added tool response context: ", tool_response_content)
 
                 brain_ans = await self._brain_iteration(context, iteration)
 
@@ -367,7 +386,7 @@ class AIOT(Generic[T]):
         formatted_prompt = self.llm.format_prompt(system_prompt, user_prompt)
         return await self.llm.generate_async(formatted_prompt, ToolResponse)
 
-    def _run_tool_and_format_output(self, tool_response: ToolResponse) -> str:
+    def _get_tool_output(self, tool_response: ToolResponse) -> str:
         if self.tool_runner is None:
             raise ValueError("Tool runner function not provided.")
 
