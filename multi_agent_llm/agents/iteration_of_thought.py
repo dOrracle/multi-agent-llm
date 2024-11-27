@@ -173,8 +173,8 @@ a detailed description of the desired tool, and the input data to be used with t
 This information will be forwarded to a Tool Generator agent who will implement and evaluate the tool, \
 then provide you with the tools output.
 
-Do not waste iterations requesting too many tools, as this will stall the iteration loop and delay the \
-final answer to the query.
+Do not waste iterations requesting too many tools, as this will stall the iteration loop \
+and delay the final answer to the query.
 
 If you decide that the LLM has delivered a complete answer, conclude the iteration by setting \
 `iteration_stop` to True in your response.
@@ -319,9 +319,11 @@ class AIOT(Generic[T]):
                 )
             )
 
-            context[
-                "prompt_history"
-            ] += f"Cognitive Reflection Agent: {brain_ans.self_thought}\nLLM answer: {llm_ans.response}\n\n"
+            new_history = (
+                f"Cognitive Reflection Agent: {brain_ans.self_thought}\n"
+                f"LLM answer: {llm_ans.response}\n\n"
+            )
+            context["prompt_history"] += new_history
             iteration += 1
 
         return DiscussionResult(
@@ -363,15 +365,15 @@ class AIOT(Generic[T]):
         formatted_prompt = self.llm.format_prompt(system_prompt, user_prompt)
         return await self.llm.generate_async(formatted_prompt, ToolResponse)
 
-    def _run_tool_and_format_output(self, tool_request: ToolRequest) -> str:
+    def _run_tool_and_format_output(self, tool_response: ToolResponse) -> str:
         if self.tool_runner is None:
             raise ValueError("Tool runner function not provided.")
 
-        tool_response = self.tool_runner(
-            tool_request.description,
-            tool_request.input,
+        tool_response_content = self.tool_runner(
+            tool_response.code,
+            tool_response.pip_dependencies
         )
-        return f"The requested tool was generated and evaluated. Here is the output:\n\n{tool_response}"
+        return f"The requested tool was generated and evaluated. Here is the output:\n\n{tool_response_content}"
 
 class GIOT(Generic[T]):
     def __init__(
