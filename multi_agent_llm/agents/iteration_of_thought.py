@@ -110,7 +110,7 @@ class ConversationTurn(BaseModel):
 class LLMResponseIteration(BaseModel):
     response: str = Field(
         ...,
-        description="Response to the inner cognitive brain's discussion for the current iteration",
+        description="Response to the Inner Dialogue Agent's discussion for the current iteration",
     )
 
 
@@ -118,109 +118,65 @@ tool_gen_agent = Agent(
     name="Tool Generator Agent",
 
     role="""\
-You are a Tool Generator Agent responsible for creating tools that can assist the \
-Cognitive Reflection Agent in guiding the LLM Agent.""",
+You are responsible for creating tools to assist the Inner Dialogue Agent in guiding \
+the LLM Agent.""",
 
     function="""\
-Generate Python code that implements a tool based on the Cognitive Reflection Agent's request. \
-Consider the tool's name, description, and desired inputs to create the Python function. \
-Ensure that the function you create can accept the input data provided."""
+Generate Python code for tools based on requests from the Inner Dialogue Agent. Use the provided \
+tool name, description, and input data to design a functional Python implementation. Ensure the \
+created function can process the specified input accurately. \
+
+All code you generated should be directly runnable and should serve the desired purpose.
+
+DO NOT DO any of the following:
+- Use mock data to circumvent errors unless explicitly requested.
+- Produce example code with placeholder values.
+- Avoid producing code that requires external authentication or API keys.
+- Avoid producing code that generates images or plots
+"""
 )
 
-brain_agent = Agent(
-    name="Cognitive Reflection Agent",
+dialogue_agent = Agent(
+    name="Inner Dialogue Agent",
 
     role="""\
-You are an internal guide responsible for ensuring another LLM Agent thoroughly \
-understands and solves complex questions. Your primary task is to bring forth all \
-relevant domain-specific knowledge necessary for the LLM Agent to address the query accurately.
-
-You also have the option to request a tool to be used to help with the above. \
-Any tool requests will be forwarded to a Tool Generator agent who will implement and evaluate \
-the tool dynamically.
-
-At each step of the reasoning process, you will provide the LLM Agent with targeted prompts \
-that correct any misconceptions, reinforce correct thinking, and introduce essential \
-knowledge that it may be overlooking. When the LLM Agent struggles or deviates, you ensure it has \
-access to the precise information needed to think through the problem effectively.
-
-Do not provide factually wrong insights to the LLM Agent. If you are unsure and not confident of \
-the answer/solution, always iterate until the LLM Agent reaches maximum iterations. \
-Your guidance prompt should be detailed and informative. \
-Always encourage iterating with the LLM Agent over arriving at a final answer too soon.""",
+You are a guide responsible for ensuring the LLM Agent understands and solves complex queries. \
+Your role is to provide domain-specific knowledge, correct reasoning errors, and encourage \
+iteration until an accurate solution is reached. You may request tools when necessary to \
+aid the LLM Agent in reasoning or accessing external information.""",
 
     function="""\
-Guide the LLM Agent in accurately and efficiently solving queries by supplying all \
-relevant domain-specific knowledge required for the task. Identify any areas where the LLM \
-agent may be struggling or reasoning incorrectly, and intervene with prompts that provide \
-the critical information needed to correct its course. Ensure the LLM Agent fully comprehends the \
-query by continuously providing the necessary background, concepts, and techniques specific \
-to the domain of the question. Your goal is to refine the LLM Agent's reasoning process \
-step-by-step, ensuring each response builds on the previous one, until the LLM Agent reaches a \
-comprehensive and accurate solution.
+Facilitate accurate query resolution by guiding the LLM Agent with targeted prompts. \
+Identify reasoning errors or knowledge gaps and provide corrective insights. \
+Iterate step-by-step, refining the Agent's understanding and ensuring responses build \
+toward a comprehensive solution. When necessary, request tools to perform calculations, \
+fetch real-time data, or verify results, balancing efficiency with effectiveness.
 
-Based on this analysis, generate a follow-up prompt that guides the LLM Agent to the next step in \
-the reasoning process. Use a structured approach, ensuring that each prompt builds upon the \
-previous one (or corrects it) and moves the LLM Agent closer to an accurate answer quickly with as \
-little iterations as possible. Be sure to read through the query thoroughly and make the LLM \
-agent understand every word of query thoroughly as well.
+Key functions include:
+- Supplying domain-specific context and techniques.
+- Encouraging iteration without rushing to conclusions.
+- Generating structured prompts that address reasoning gaps or misconceptions.
+- Requesting tools when the LLM Agent requires external support.
 
-If you decide that you need a tool to be used to help with the above, you can request it by \
-providing a `tool_request` in your response. The tool request should include the name of the tool, \
-a detailed description of the desired tool, and the input data to be used with the generated tool. \
-This information will be forwarded to a Tool Generator agent who will implement and evaluate the tool, \
-then provide you with the tools output.
-
-Reasons to initiate a tool request may include the following:
-
-    - the LLM agent explicitly says that it lacks access to certain information
-    - needing to fetch real-time data that is not available in the LLM's knowledge base
-    - needing to perform complex calculations or simulations
-    - needing to access external APIs or databases
-    - needing to verify solutions to easily-checked numerical problems
-    - needing to use a search engine to find relevant information
-
-If tool evaluation leads has led to an error, re-request the tool with an updated description to \
-address the issue.
-
-Do not waste iterations requesting too many tools, as this will stall the iteration loop \
-and delay the final answer to the query.
-
-If you decide that the LLM has delivered a complete answer, conclude the iteration by setting \
-`iteration_stop` to True in your response.
-
-Here are some examples of iterative instructions you can use, depending on the context of the \
-query or/and the LLM Agent's previous response:
-"What techniques or methods do you know that you can use to answer this question or solve this problem?"
-"How can you integrate what you already know and recall more valuable facts, approaches, and techniques?"
-"Can you elaborate on [specific aspect of the previous response]?"
-"Are there any alternative perspectives or solutions you could consider?"
-"How can you verify the accuracy or validity of your current answer?"""
+Conclude the process by stopping iterations when the solution is complete and accurate."""
 )
 
 llm_agent = Agent(
     name="LLM",
 
     role="""\
-You are a knowledgeable and articulate language model designed to collaborate with an \
-Inner Cognitive Brain to provide well-reasoned and accurate answers to complex questions. \
-Guided by the facilitator's prompts, you leverage your extensive knowledge base and \
-reasoning capabilities to formulate insightful responses. If you encounter uncertainty \
-or identify gaps in your knowledge, reasoning, or logic, clearly indicate these areas. \
-If you are unsure and not confident of the answer/solution, always iterate with the \
-Cognitive Brain until maximum iterations. Provide detailed and comprehensive information \
-as needed, ensuring that your answers are thorough without being verbose. \
-Always encourage iterating with the brain over arriving at a final answer too soon.""",
+You are a language model designed to collaborate with the Inner Dialogue Agent to solve complex \
+questions. Your role is to leverage your knowledge base and reasoning skills to provide \
+well-reasoned, accurate, and insightful answers. Clearly indicate any uncertainties or \
+knowledge gaps, and support iterative refinement until the query is resolved.""",
 
     function="""\
-Receive and process prompts from the Inner Cognitive Brain, retrieving relevant knowledge \
-and applying logical reasoning to address the query. If you identify gaps in your knowledge, \
-reasoning, or logic, make these explicit in your response. Ensure your answers are clear, \
-detailed, and directly address the prompt. Collaborate iteratively with the \
-Inner Cognitive Brain, refining your answers until a satisfactory and accurate response \
-is achieved. Provide comprehensive explanations where necessary, focusing on delivering \
-thorough and precise information without being verbose. If you have reached maximum iterations, \
-please give back a final definitive answer to the query by picking one of the options."""
+Process prompts from the Inner Dialogue Agent by retrieving relevant knowledge and applying logical \
+reasoning. Highlight uncertainties or gaps in reasoning, and collaborate iteratively to refine \
+responses. Provide clear, detailed, and accurate answers, ensuring each response builds on the \
+previous one. Avoid premature conclusions, encouraging iteration to achieve a comprehensive \
+solution. When reaching maximum iterations, deliver a final definitive answer, selecting the \
+most accurate option if applicable."""
 )
 
 
@@ -229,18 +185,19 @@ class AIOT(Generic[T]):
         self,
         llm: LLMBase,
         iterations: int = 5,
+        tool_attempts: int = 3,
         answer_schema: Optional[Type[T]] = None,
-        tool_runner: Optional[Callable[[
-            str, Optional[List[str]]], str]] = None,
+        tool_runner: Optional[Callable[[str, Optional[List[str]]], str]] = None,
         interactive: bool = False,
     ):
         self.llm = llm
         self.max_iterations = iterations
+        self.tool_attempts = tool_attempts
         self.answer_schema = answer_schema or str
         self.tool_runner = tool_runner
         self.interactive = interactive
 
-        self.brain_agent = brain_agent
+        self.dialogue_agent = dialogue_agent
         self.llm_agent = llm_agent
         self.tool_gen_agent = tool_gen_agent
 
@@ -266,6 +223,7 @@ class AIOT(Generic[T]):
             "prompt_history": f"**Important** Initial Query: {query}\n\n",
             "conversation": [],
             "tool_outputs": {},
+            "tool_errors": {},
         }
 
     async def run_async(self, query: str) -> DiscussionResult[T]:
@@ -300,25 +258,41 @@ class AIOT(Generic[T]):
                 print("Brain iteration failed. Ending discussion.")
                 break
 
+            tool_attempts = 0
             while (
                 self.tool_runner is not None
                 and brain_ans.tool_request is not None
+                and tool_attempts < self.tool_attempts
             ):
                 # Enter tool evaluation loop.
-                print("💡 Received tool request from the brain.",
+                print(
+                    "💡 Received tool request from the brain.",
                     brain_ans.tool_request.model_dump()
                 )
-                tool_response = await self._tool_iteration(brain_ans.tool_request)
+                tool_response = await self._tool_iteration(brain_ans.tool_request, context)
+                print(
+                    "💡💡💡 Current tool context:",
+                    context.get("tool_outputs", "No previous tool requests"),
+                )
 
                 print("💡 Tool Generated:\n", tool_response.code)
 
                 # TODO: use async function here?
                 tool_response_content = self._get_tool_output(tool_response)
-                context["tool_outputs"][brain_ans.tool_request.name] = tool_response_content
+                tool_name = brain_ans.tool_request.name
+
+                if tool_response_content.startswith("ERROR"):
+                    context["tool_errors"][tool_name] = {
+                        "code": tool_response.code,
+                        "error": tool_response_content,
+                    }
+                else:
+                    context["tool_outputs"][tool_name] = tool_response_content
 
                 print("💡 Added tool response context: ", tool_response_content)
 
                 brain_ans = await self._brain_iteration(context, iteration)
+                tool_attempts += 1
 
             completed = brain_ans.iteration_stop
 
@@ -339,7 +313,7 @@ class AIOT(Generic[T]):
             )
 
             new_history = (
-                f"Cognitive Reflection Agent: {brain_ans.self_thought}\n"
+                f"Inner Dialogue Agent: {brain_ans.self_thought}\n"
                 f"LLM answer: {llm_ans.response}\n\n"
             )
             context["prompt_history"] += new_history
@@ -354,10 +328,20 @@ class AIOT(Generic[T]):
     async def _brain_iteration(
         self, context: dict, iteration: int
     ) -> Optional[BrainIteration]:
-        prompt_with_history = f"""{context["prompt_history"]}\n Current Iteration : {iteration}\n
-        Make the LLM answer within maximum of {self.max_iterations} iterations\n\n Ideate first with LLM and guide the LLM towards the answer, considering the remaining iterations.\n\n.
-        Talk and prompt LLM in second person directly as if you are discussing with the LLM to guide it towards the answer.\n"""
-        system_prompt, user_prompt = self.brain_agent.prompt(
+        prompt_with_history = f"""{context["prompt_history"]}
+
+Current Iteration: {iteration}
+
+Tool outputs: {context.get("tool_outputs", "None")}
+
+Make the LLM answer within maximum of {self.max_iterations} iterations.
+
+Ideate first with LLM and guide the LLM towards the answer, considering the remaining iterations.
+
+Talk with and prompt LLM in second person directly as if you are discussing with the LLM to guide \
+it towards the answer."""
+
+        system_prompt, user_prompt = self.dialogue_agent.prompt(
             prompt_with_history)
         formatted_prompt = self.llm.format_prompt(system_prompt, user_prompt)
         return await self.llm.generate_async(formatted_prompt, BrainIteration)
@@ -374,12 +358,14 @@ class AIOT(Generic[T]):
         formatted_prompt = self.llm.format_prompt(system_prompt, user_prompt)
         return await self.llm.generate_async(formatted_prompt, self.get_llm_schema())
 
-    async def _tool_iteration(self, tool_request: ToolRequest):
+    async def _tool_iteration(self, tool_request: ToolRequest, context: dict):
         tool_gen_prompt = (
             "Generate a tool with the following details:\n"
             f"Name: {tool_request.name}\n"
             f"Description: {tool_request.description}\n"
-            f"Input: {tool_request.input}\n"
+            f"Input: {tool_request.input}\n\n"
+            "Consider previous outcomes below, regarding previous tool requests:\n"
+            f"{context.get('tool_outputs', 'No previous tool requests')}\n"
         )
         system_prompt, user_prompt = self.tool_gen_agent.prompt(
             tool_gen_prompt)
@@ -394,7 +380,7 @@ class AIOT(Generic[T]):
             tool_response.code,
             tool_response.pip_dependencies
         )
-        return f"The requested tool was generated and evaluated. Here is the output:\n\n{tool_response_content}"
+        return tool_response_content
 
 
 class GIOT(Generic[T]):
@@ -407,7 +393,7 @@ class GIOT(Generic[T]):
         self.llm = llm
         self.total_iterations = iterations
         self.answer_schema = answer_schema or str
-        self.brain_agent = self._create_brain_agent()
+        self.dialogue_agent = self._create_dialogue_agent()
         self.llm_agent = self._create_llm_agent()
         self._loop = asyncio.get_event_loop()
         self._executor = ThreadPoolExecutor(max_workers=1)
@@ -423,8 +409,8 @@ class GIOT(Generic[T]):
 
         return LLMFinalResponse
 
-    def _create_brain_agent(self):
-        return brain_agent
+    def _create_dialogue_agent(self):
+        return dialogue_agent
 
     def _create_llm_agent(self):
         return llm_agent
@@ -481,7 +467,7 @@ class GIOT(Generic[T]):
 
             context[
                 "prompt_history"
-            ] += f"Iteration {current_iteration}/{self.total_iterations}:\nCognitive Reflection Agent: {brain_ans.self_thought}\nLLM answer: {llm_ans.response}\n\n"
+            ] += f"Iteration {current_iteration}/{self.total_iterations}:\nInner Dialogue Agent: {brain_ans.self_thought}\nLLM answer: {llm_ans.response}\n\n"
 
         final_answer = await self._llm_final_iteration(context)
 
@@ -501,7 +487,7 @@ class GIOT(Generic[T]):
             f"Chat and prompt LLM directly as if you are discussing with the LLM to guide it towards the answer.\n"
             f"Original query: {context['query']}\n"
         )
-        system_prompt, user_prompt = self.brain_agent.prompt(
+        system_prompt, user_prompt = self.dialogue_agent.prompt(
             prompt_with_history)
         formatted_prompt = self.llm.format_prompt(system_prompt, user_prompt)
         return await self.llm.generate_async(formatted_prompt, BrainIteration)
