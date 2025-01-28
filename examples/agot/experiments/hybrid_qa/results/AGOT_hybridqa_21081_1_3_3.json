@@ -1,0 +1,77 @@
+{
+    "final_answer": {
+        "explanation": "The actor from the show 'Community' featured on a 2015 TV Guide cover is Joel McHale. He was highlighted in the 'Funny Issue' of TV Guide published on March 9, 2015, where he served as the guest editor. Joel McHale is best known for his role as Jeff Winger in 'Community', which aired from 2009 to 2015. While he is also known for hosting 'The Soup', the specific cover in question emphasizes his connection to 'Community'. Therefore, the relevant show associated with Joel McHale and the TV Guide cover is 'Community'.",
+        "answer": "Community"
+    },
+    "graph": [
+        {
+            "id": 84,
+            "title": "Find Community Actor",
+            "content": "<84>[Find Community Actor] Identify the actor from Community featured on a 2015 TV Guide cover.</84>",
+            "answer": "To identify the show hosted by the actor from Community featured on a 2015 TV Guide cover, we need to focus on the following points:\n\n1. **Identify the Actor**: The actor from Community who was featured on the 2015 TV Guide cover is Joel McHale. He is well-known for his role as Jeff Winger in the sitcom Community, which aired from 2009 to 2015.\n\n2. **TV Guide Cover Details**: The specific cover in question is titled \"The Funny Issue,\" published on March 9, 2015. Joel McHale served as the guest editor for this issue, which prominently featured him.\n\n3. **Show Hosted by Joel McHale**: While Joel McHale is primarily recognized for his role in Community, he also hosted a show called The Soup, which aired from 2004 to 2015. However, the cover specifically highlights his role in Community, as it emphasizes his contributions to comedy through this series.\n\n4. **Conclusion**: Therefore, the show associated with Joel McHale that is relevant to the 2015 TV Guide cover is Community. This conclusion is supported by the context provided, which links McHale's recognition as an actor to his role in Community, particularly in the comedic landscape highlighted by the TV Guide cover.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": [
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
+            ],
+            "strategy": "The question requires identifying a specific show hosted by an actor from the series Community that appeared on a 2015 TV Guide cover. The first task focuses on identifying the actor from Community who is featured on the cover. The second task involves listing all the shows hosted by that actor, which is crucial for narrowing down the options. The third task is to cross-reference the identified shows with the 2015 TV Guide covers to pinpoint the exact show in question. This structured approach ensures that each task is independent and systematically leads to the final answer.",
+            "children": [
+                101
+            ]
+        },
+        {
+            "id": 85,
+            "title": "List Actor's Shows",
+            "content": "<85>[List Actor's Shows] List all TV shows hosted by the identified actor.</85>",
+            "answer": "The actor featured on a 2015 TV Guide cover who is associated with the show \"Community\" is Joel McHale. He was the guest editor for the \"Funny Issue\" of TV Guide, which highlights his connection to the show. Joel McHale is best known for his role as Jeff Winger in \"Community,\" which aired from 2009 to 2015. Therefore, the show hosted by Joel McHale that is relevant to the 2015 TV Guide cover is \"Community.\"",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": "",
+            "strategy": "The question requires identifying a specific show hosted by an actor from the series Community that appeared on a 2015 TV Guide cover. The first task focuses on identifying the actor from Community who is featured on the cover. The second task involves listing all the shows hosted by that actor, which is crucial for narrowing down the options. The third task is to cross-reference the identified shows with the 2015 TV Guide covers to pinpoint the exact show in question. This structured approach ensures that each task is independent and systematically leads to the final answer.",
+            "children": [
+                101
+            ]
+        },
+        {
+            "id": 86,
+            "title": "Cross-reference Shows",
+            "content": "<86>[Cross-reference Shows] Cross-reference the shows with the 2015 TV Guide covers to find the relevant show.</86>",
+            "answer": "The task involves identifying the show hosted by Joel McHale, who was featured on a 2015 TV Guide cover. Joel McHale is best known for his role as Jeff Winger in the sitcom \"Community,\" which aired from 2009 to 2015. Additionally, he hosted the show \"The Soup,\" a comedic talk show that aired from 2004 to 2014. The specific TV Guide cover featuring McHale was published on March 9, 2015, as part of the \"Funny Issue,\" where he served as the guest editor. Therefore, the relevant show associated with Joel McHale and the TV Guide cover is \"The Soup,\" while his role in \"Community\" is also significant but not the show he hosted at the time of the cover.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": [
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
+            ],
+            "strategy": "The question requires identifying a specific show hosted by an actor from the series Community that appeared on a 2015 TV Guide cover. The first task focuses on identifying the actor from Community who is featured on the cover. The second task involves listing all the shows hosted by that actor, which is crucial for narrowing down the options. The third task is to cross-reference the identified shows with the 2015 TV Guide covers to pinpoint the exact show in question. This structured approach ensures that each task is independent and systematically leads to the final answer.",
+            "children": [
+                101
+            ]
+        },
+        {
+            "id": 101,
+            "title": "Final Answer Consolidation",
+            "content": "<101>[Final Answer Consolidation] Consolidate the findings from the identified actor, their shows, and the relevant TV Guide cover to provide a direct answer to the question.</101>",
+            "answer": {
+                "explanation": "The actor from the show 'Community' featured on a 2015 TV Guide cover is Joel McHale. He was highlighted in the 'Funny Issue' of TV Guide published on March 9, 2015, where he served as the guest editor. Joel McHale is best known for his role as Jeff Winger in 'Community', which aired from 2009 to 2015. While he is also known for hosting 'The Soup', the specific cover in question emphasizes his connection to 'Community'. Therefore, the relevant show associated with Joel McHale and the TV Guide cover is 'Community'.",
+                "answer": "Community"
+            },
+            "depth": 0,
+            "layer": 0,
+            "subgraph": "",
+            "strategy": "The current task graph has reached a conclusion as it has identified the actor (Joel McHale) from Community, listed his shows, and cross-referenced them with the 2015 TV Guide cover. Therefore, a final task is proposed to consolidate these findings and provide a direct answer to the question.",
+            "children": []
+        }
+    ]
+}

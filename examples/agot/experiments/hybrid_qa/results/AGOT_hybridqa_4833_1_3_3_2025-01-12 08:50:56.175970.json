@@ -1,0 +1,68 @@
+{
+    "final_answer": {
+        "explanation": "Jodelle Ferland was nominated for a 2005 Young Artist Award for her role as Mary Jensen in the television series \"Kingdom Hospital.\" This series was developed by Stephen King, who adapted it from Lars von Trier's Danish series \"The Kingdom.\" Additionally, the series had contributions from producers Greg Yaitanes and writers Scott K. Anderson and David E. Kelley. Therefore, the main developer of \"Kingdom Hospital\" is Stephen King, with significant contributions from the other mentioned individuals.",
+        "answer": "Stephen King, with contributions from Greg Yaitanes, Scott K. Anderson, and David E. Kelley."
+    },
+    "graph": [
+        {
+            "id": 48,
+            "title": "Find Nominated Series",
+            "content": "<48>[Find Nominated Series] Identify the series Jodelle Ferland was nominated for in 2005 Young Artist Award.</48>",
+            "answer": "The findings from the existing nodes indicate that Jodelle Ferland was nominated for a 2005 Young Artist Award for her performance as Mary Jensen in the television series \"Kingdom Hospital.\" This series was developed by horror writer Stephen King, who adapted it from Lars von Trier's Danish series \"The Kingdom.\" Additionally, the series had several other contributors, including producers Greg Yaitanes and writers Scott K. Anderson and David E. Kelley. Therefore, the clear and direct answer to the question of who developed 'Kingdom Hospital' is Stephen King, with contributions from Greg Yaitanes, Scott K. Anderson, and David E. Kelley.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": [
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
+            ],
+            "strategy": "The question requires identifying the series for which Jodelle Ferland was nominated for a Young Artist Award in 2005. The first task focuses on pinpointing the specific series, which is essential to answering the question. The second task involves researching the developers of that series, as the question specifically asks for the developers. The third task aims to gather context about the Young Artist Award nominations and winners, which may provide additional insights or confirmations related to the series and its creators.",
+            "children": [
+                57
+            ]
+        },
+        {
+            "id": 49,
+            "title": "Identify Series Developers",
+            "content": "<49>[Identify Series Developers] Research the creators of the series identified in the previous task.</49>",
+            "answer": "To identify the developers of the series for which Jodelle Ferland was nominated for a 2005 Young Artist Award, we need to analyze the nomination details provided in the table. The nomination was for the category 'Best Performance in a TV Series - Guest Starring Young Actress' for her role as Emily Eve Dinsmore in the series 'Smallville'. \n\nThe series 'Smallville' was developed by writers Alfred Gough and Miles Millar. They created the show based on the DC Comics character Superman, focusing on the early life of Clark Kent before he becomes Superman. \n\nThus, the developers of the series for which Jodelle Ferland was nominated are Alfred Gough and Miles Millar.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": "",
+            "strategy": "The question requires identifying the series for which Jodelle Ferland was nominated for a Young Artist Award in 2005. The first task focuses on pinpointing the specific series, which is essential to answering the question. The second task involves researching the developers of that series, as the question specifically asks for the developers. The third task aims to gather context about the Young Artist Award nominations and winners, which may provide additional insights or confirmations related to the series and its creators.",
+            "children": [
+                57
+            ]
+        },
+        {
+            "id": 50,
+            "title": "Gather Award Details",
+            "content": "<50>[Gather Award Details] Compile information on the 2005 Young Artist Award nominations and winners.</50>",
+            "answer": "In 2005, Jodelle Ferland was nominated for a Young Artist Award for her performance as Mary Jensen in the series \"Kingdom Hospital.\" The series was developed by horror writer Stephen King. This information is derived from the provided data regarding her nominations and the associated works.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": "",
+            "strategy": "The question requires identifying the series for which Jodelle Ferland was nominated for a Young Artist Award in 2005. The first task focuses on pinpointing the specific series, which is essential to answering the question. The second task involves researching the developers of that series, as the question specifically asks for the developers. The third task aims to gather context about the Young Artist Award nominations and winners, which may provide additional insights or confirmations related to the series and its creators.",
+            "children": [
+                57
+            ]
+        },
+        {
+            "id": 57,
+            "title": "Consolidate Findings",
+            "content": "<57>[Consolidate Findings] Consolidate the findings from the previous tasks to provide a direct answer to the question regarding the developers of the series for which Jodelle Ferland was nominated for a 2005 Young Artist Award.</57>",
+            "answer": {
+                "explanation": "Jodelle Ferland was nominated for a 2005 Young Artist Award for her role as Mary Jensen in the television series \"Kingdom Hospital.\" This series was developed by Stephen King, who adapted it from Lars von Trier's Danish series \"The Kingdom.\" Additionally, the series had contributions from producers Greg Yaitanes and writers Scott K. Anderson and David E. Kelley. Therefore, the main developer of \"Kingdom Hospital\" is Stephen King, with significant contributions from the other mentioned individuals.",
+                "answer": "Stephen King, with contributions from Greg Yaitanes, Scott K. Anderson, and David E. Kelley."
+            },
+            "depth": 0,
+            "layer": 0,
+            "subgraph": "",
+            "strategy": "The current task graph has reached a conclusion as it has identified the series and its developers. Therefore, a final task is proposed to consolidate these findings and provide a direct answer to the question.",
+            "children": []
+        }
+    ]
+}

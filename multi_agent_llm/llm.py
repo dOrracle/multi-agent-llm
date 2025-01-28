@@ -25,12 +25,11 @@ class LLMBase:
 
 
 class OpenAILLM(LLMBase):
-    def __init__(self, model_name: str, **kwargs):
+    def __init__(self, model_name: str, api_key: str | None = None, **kwargs):
         super().__init__(model_name, **kwargs)
-        self.client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"), **kwargs)
-        self.async_client = AsyncOpenAI(
-            api_key=os.environ.get("OPENAI_API_KEY"), **kwargs
-        )
+        _api_key = api_key or os.getenv("OPENAI_API_KEY")
+        self.client = OpenAI(api_key=_api_key, **kwargs)
+        self.async_client = AsyncOpenAI(api_key=_api_key, **kwargs)
 
     @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
     def generate(self, prompt: Any, schema: Optional[Type[BaseModel]] = None) -> Any:

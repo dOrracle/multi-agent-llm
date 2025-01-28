@@ -1,0 +1,76 @@
+{
+    "final_answer": {
+        "explanation": "The official documentary film of the 1982 FIFA World Cup, which was held in Spain, is titled \"G'ol\u00e9!\". The film is narrated by Sean Connery, a well-known Scottish actor. This information is confirmed by the data provided in the context regarding the FIFA World Cup official films, specifically highlighting the narrator associated with the 1982 tournament. The film captures the essence of the World Cup, including key moments and highlights from the tournament, which Italy won by defeating West Germany in the final.",
+        "answer": "Sean Connery"
+    },
+    "graph": [
+        {
+            "id": 1009,
+            "title": "Find Film Title",
+            "content": "<1009>[Find Film Title] Identify the title of the official documentary film for the 1982 FIFA World Cup.</1009>",
+            "answer": "The 1982 FIFA World Cup, held in Spain from June 13 to July 11, was a significant tournament in football history. It was won by Italy, who defeated West Germany 3-1 in the final at the Santiago Bernab\u00e9u Stadium in Madrid. This tournament was notable for several reasons: it featured the first penalty shoot-out in World Cup history, and it was the last World Cup to have two rounds of group stages. Additionally, it marked the first appearances of several teams, including Algeria, Cameroon, Honduras, Kuwait, and New Zealand.\n\nThe official documentary film of the tournament is titled \"G'ol\u00e9!\". Narrated by Sean Connery, the film chronicles the key events of the World Cup, including Italy's journey to victory and highlights the performances of teams like New Zealand and Cameroon, the latter being recognized as a rising force in African football. The film captures the excitement and drama of the matches, showcasing the tournament's impact on the global football landscape.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": [
+                {},
+                {},
+                {},
+                {}
+            ],
+            "strategy": "The question asks for the narrator of the official documentary film of the 1982 FIFA World Cup. To effectively address this, I will generate three independent tasks. The first task will focus on identifying the title of the official documentary film, which is crucial as it directly relates to the narrator. The second task will specifically look up the narrator of the identified film. Finally, the third task will verify the details of the 1982 FIFA World Cup to provide context and ensure the accuracy of the information related to the film. Each task is designed to build towards answering the main question without overlapping in focus.",
+            "children": []
+        },
+        {
+            "id": 1010,
+            "title": "Find Film Narrator",
+            "content": "<1010>[Find Film Narrator] Look up the narrator of the official documentary film of the 1982 FIFA World Cup.</1010>",
+            "answer": "The findings regarding the 1982 FIFA World Cup have been consolidated as follows:\n\n- **Title of the Official Documentary Film**: \"G'ol\u00e9!\"\n- **Narrator**: Sean Connery\n- **Key Events from the Tournament**: The tournament was held in Spain from June 13 to July 11, 1982. Italy won the tournament by defeating West Germany 3-1 in the final match at the Santiago Bernab\u00e9u Stadium in Madrid. This victory marked Italy's third World Cup title, their first since 1938. The tournament also featured the first penalty shoot-out in World Cup history and was notable for the large margin of victory in the match between Hungary and El Salvador, where Hungary won 10-1.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": [
+                {},
+                {},
+                {},
+                {}
+            ],
+            "strategy": "The question asks for the narrator of the official documentary film of the 1982 FIFA World Cup. To effectively address this, I will generate three independent tasks. The first task will focus on identifying the title of the official documentary film, which is crucial as it directly relates to the narrator. The second task will specifically look up the narrator of the identified film. Finally, the third task will verify the details of the 1982 FIFA World Cup to provide context and ensure the accuracy of the information related to the film. Each task is designed to build towards answering the main question without overlapping in focus.",
+            "children": [
+                1026
+            ]
+        },
+        {
+            "id": 1011,
+            "title": "Verify World Cup Details",
+            "content": "<1011>[Verify World Cup Details] Verify the details of the 1982 FIFA World Cup, including its host country and key events.</1011>",
+            "answer": "The official documentary film of the 1982 FIFA World Cup held in Spain is titled \"G'ol\u00e9!\". The narrator for this film is Sean Connery, a renowned Scottish actor known for his iconic roles, including that of James Bond. This information is derived from the context provided in the data about the FIFA World Cup official films, specifically detailing the narrator associated with the 1982 tournament.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": [
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
+            ],
+            "strategy": "The question asks for the narrator of the official documentary film of the 1982 FIFA World Cup. To effectively address this, I will generate three independent tasks. The first task will focus on identifying the title of the official documentary film, which is crucial as it directly relates to the narrator. The second task will specifically look up the narrator of the identified film. Finally, the third task will verify the details of the 1982 FIFA World Cup to provide context and ensure the accuracy of the information related to the film. Each task is designed to build towards answering the main question without overlapping in focus.",
+            "children": [
+                1026
+            ]
+        },
+        {
+            "id": 1026,
+            "title": "Final Answer Compilation",
+            "content": "<1026>[Final Answer Compilation] Consolidate the findings from the previous tasks to provide a direct answer to the question regarding the narrator of the official documentary film of the 1982 FIFA World Cup.</1026>",
+            "answer": {
+                "explanation": "The official documentary film of the 1982 FIFA World Cup, which was held in Spain, is titled \"G'ol\u00e9!\". The film is narrated by Sean Connery, a well-known Scottish actor. This information is confirmed by the data provided in the context regarding the FIFA World Cup official films, specifically highlighting the narrator associated with the 1982 tournament. The film captures the essence of the World Cup, including key moments and highlights from the tournament, which Italy won by defeating West Germany in the final.",
+                "answer": "Sean Connery"
+            },
+            "depth": 0,
+            "layer": 0,
+            "subgraph": "",
+            "strategy": "The current task graph has reached a conclusion regarding the question about the narrator of the official documentary film of the 1982 FIFA World Cup. The relevant findings have been consolidated, and the answer has been verified through the tasks that identified the film title and the narrator. Therefore, a final task is proposed to compile these results into a direct answer.",
+            "children": []
+        }
+    ]
+}

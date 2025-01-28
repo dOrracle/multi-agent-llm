@@ -1,3 +1,11 @@
+datasets==3.2.0
+nest-asyncio==1.6.0
+networkx==3.4.2
+numpy==1.26.4
 openai>=1.46.0
+pandas==2.2.3
 pydantic==2.9.2
+rich==13.9.4
+rouge_score==0.1.2
 tenacity==9.0.0
+tqdm==4.67.1
