@@ -14,18 +14,17 @@ import networkx as nx
 from pydantic import BaseModel
 from rich.console import Console
 from rich.text import Text
-from tasks import (CheckComplex, EvaluateTask, FinalAnswer, FinalTask,
-                   InitialTask, MultiTaskResponse, NewTask, NodeData, Task)
-from templates import (COMPLEXITY_CHECK_SYS_PROMPT,
-                       COMPLEXITY_CHECK_USER_PROMPT,
-                       FINAL_TASK_EXECUTION_PROMPT, FINAL_TASK_SYS_PROMPT,
-                       FINAL_TASK_USER_PROMPT, SYSTEM_PROMPT,
-                       TASK_EXECUTION_SYS_PROMPT, TASK_EXECUTION_USER_PROMPT,
-                       USER_PROMPT_INITIAL_SUB_TASK, USER_PROMPT_INITIAL_TASK,
-                       USER_PROMPT_NEW_TASK)
-from tqdm import tqdm
 
-from multi_agent_llm.llm import LLMBase, OpenAILLM
+from multi_agent_llm.agents.adaptive_graph_of_thoughts.tasks import (
+    CheckComplex, EvaluateTask, FinalAnswer, FinalTask, InitialTask,
+    MultiTaskResponse, NewTask, NodeData, Task)
+from multi_agent_llm.agents.adaptive_graph_of_thoughts.templates import (
+    COMPLEXITY_CHECK_SYS_PROMPT, COMPLEXITY_CHECK_USER_PROMPT,
+    FINAL_TASK_EXECUTION_PROMPT, FINAL_TASK_SYS_PROMPT, FINAL_TASK_USER_PROMPT,
+    SYSTEM_PROMPT, TASK_EXECUTION_SYS_PROMPT, TASK_EXECUTION_USER_PROMPT,
+    USER_PROMPT_INITIAL_SUB_TASK, USER_PROMPT_INITIAL_TASK,
+    USER_PROMPT_NEW_TASK)
+from multi_agent_llm.llm import LLMBase
 
 
 class PromptCategory(Enum):
