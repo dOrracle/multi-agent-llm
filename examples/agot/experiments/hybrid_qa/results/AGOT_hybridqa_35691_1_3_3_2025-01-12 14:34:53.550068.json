@@ -1,0 +1,84 @@
+{
+    "final_answer": {
+        "explanation": "To determine the club that plays at the stadium located on the bank of the Voghji River, we first identify the relevant stadium. The Gandzasar Stadium is situated in Kapan, Armenia, specifically on the left bank of the Voghji River. This stadium is the home ground of FC Gandzasar Kapan, which is a professional football club based in Kapan. The club has a seating capacity of 3,500 and is known for its local significance in Armenian football. Therefore, the club associated with the Gandzasar Stadium, which is located on the bank of the Voghji River, is FC Gandzasar Kapan.",
+        "answer": "FC Gandzasar Kapan"
+    },
+    "graph": [
+        {
+            "id": 59,
+            "title": "Find Voghji River Stadium",
+            "content": "<59>[Find Voghji River Stadium] Identify the stadium located on the bank of Voghji River and its details.</59>",
+            "answer": "To identify the club that plays at the stadium located on the bank of the Voghji River, we first confirm the stadium in question. The Gandzasar Stadium, situated in Kapan, Armenia, is located on the left bank of the Voghji River. The club that plays at this stadium is FC Gandzasar Kapan. This club is known for its local significance and has a capacity of 3,500 seats. It was founded in 2005 and has achieved notable success in Armenian football, including winning the Armenian Premier League in 2012. Therefore, the club associated with the Gandzasar Stadium on the Voghji River is FC Gandzasar Kapan.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": [
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
+            ],
+            "strategy": "The question asks for the name of the club that plays at a specific stadium located on the bank of the Voghji River. To solve this, I propose three independent tasks. The first task focuses on identifying the stadium that is situated on the bank of the Voghji River, which is essential for narrowing down the search. The second task aims to find out which club plays at Gandzasar Stadium, as it is known to be located in Kapan, which is on the Voghji River. The third task involves cross-referencing the information gathered from the first two tasks to confirm the club associated with the identified stadium. This structured approach ensures clarity and avoids redundancy.",
+            "children": [
+                82
+            ]
+        },
+        {
+            "id": 60,
+            "title": "Identify Club at Gandzasar",
+            "content": "<60>[Identify Club at Gandzasar] Determine the club that plays at Gandzasar Stadium.</60>",
+            "answer": "The consolidated findings regarding FC Gandzasar Kapan and its association with Gandzasar Stadium are as follows:\n\n1. **Gandzasar Stadium**:  \n   - **Location**: Gandzasar Stadium is located in Kapan, the capital of Syunik Province, Armenia. It is situated on the left bank of the Voghji River, specifically between Aram Manukian and Hovhannes Tumanyan streets.  \n   - **Capacity**: The stadium has a seating capacity of 3,500.  \n   - **Usage**: It is primarily used for football matches and serves as the home ground for FC Gandzasar Kapan.  \n\n2. **FC Gandzasar Kapan**:  \n   - **Club Association**: FC Gandzasar Kapan is the football club that plays at Gandzasar Stadium. The club is based in Kapan, Syunik Province.  \n   - **Ownership**: The club has been under the ownership of Zangezur Copper and Molybdenum Combine Closed Joint-Stock Company since February 25, 2015.  \n   - **Historical Context**: The name 'Gandzasar' translates to 'Treasure Mountain' in Armenian, reflecting the cultural significance of the club and its connection to the region.  \n\n3. **Geographical Context**:  \n   - Kapan is positioned in the valley of the Voghji River, which enhances the significance of the stadium's location and its role within the community.  \n\nIn summary, FC Gandzasar Kapan is the club associated with Gandzasar Stadium, which is located in Kapan on the bank of the Voghji River. This information has been verified through reliable sources, including Wikipedia entries and official club announcements.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": [
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
+            ],
+            "strategy": "The question asks for the name of the club that plays at a specific stadium located on the bank of the Voghji River. To solve this, I propose three independent tasks. The first task focuses on identifying the stadium that is situated on the bank of the Voghji River, which is essential for narrowing down the search. The second task aims to find out which club plays at Gandzasar Stadium, as it is known to be located in Kapan, which is on the Voghji River. The third task involves cross-referencing the information gathered from the first two tasks to confirm the club associated with the identified stadium. This structured approach ensures clarity and avoids redundancy.",
+            "children": [
+                82
+            ]
+        },
+        {
+            "id": 61,
+            "title": "Verify Club-Stadium Link",
+            "content": "<61>[Verify Club-Stadium Link] Cross-reference the stadium's location with the club's information.</61>",
+            "answer": "To confirm the link between FC Gandzasar Kapan and Gandzasar Stadium, we analyze the gathered information:\n\n1. **Gandzasar Stadium**: It is located in Kapan, Armenia, specifically on the left bank of the Voghji River. This geographical detail is crucial as it establishes the physical location of the stadium.\n\n2. **FC Gandzasar Kapan**: This club is explicitly identified as the team that plays at Gandzasar Stadium. The club is based in Kapan, Syunik Province, which aligns with the stadium's location. The name \"Gandzasar\" translates to \"Treasure Mountain\" in Armenian, further confirming the club's identity.\n\n3. **Ownership and Usage**: The stadium is primarily used for football matches and has a capacity of 3,500 seats. It is noted that the club has been under the ownership of Zangezur Copper and Molybdenum Combine Closed Joint-Stock Company since February 25, 2015.\n\n4. **Cross-Verification**: The information from the previous nodes consistently supports the conclusion that FC Gandzasar Kapan is indeed the club that plays at Gandzasar Stadium. The geographical context of Kapan being situated in the valley of the Voghji River confirms the stadium's location.\n\nBased on this comprehensive analysis, we can definitively confirm that FC Gandzasar Kapan is the team that plays at Gandzasar Stadium, which is located on the bank of the Voghji River in Kapan, Armenia.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": [
+                {},
+                {},
+                {},
+                {}
+            ],
+            "strategy": "The question asks for the name of the club that plays at a specific stadium located on the bank of the Voghji River. To solve this, I propose three independent tasks. The first task focuses on identifying the stadium that is situated on the bank of the Voghji River, which is essential for narrowing down the search. The second task aims to find out which club plays at Gandzasar Stadium, as it is known to be located in Kapan, which is on the Voghji River. The third task involves cross-referencing the information gathered from the first two tasks to confirm the club associated with the identified stadium. This structured approach ensures clarity and avoids redundancy.",
+            "children": [
+                82
+            ]
+        },
+        {
+            "id": 82,
+            "title": "Final Answer Club",
+            "content": "<82>[Final Answer Club] Consolidate the findings from the existing nodes to provide a direct answer to the question about the club that plays at the stadium located on the bank of the Voghji River.</82>",
+            "answer": {
+                "explanation": "To determine the club that plays at the stadium located on the bank of the Voghji River, we first identify the relevant stadium. The Gandzasar Stadium is situated in Kapan, Armenia, specifically on the left bank of the Voghji River. This stadium is the home ground of FC Gandzasar Kapan, which is a professional football club based in Kapan. The club has a seating capacity of 3,500 and is known for its local significance in Armenian football. Therefore, the club associated with the Gandzasar Stadium, which is located on the bank of the Voghji River, is FC Gandzasar Kapan.",
+                "answer": "FC Gandzasar Kapan"
+            },
+            "depth": 0,
+            "layer": 0,
+            "subgraph": "",
+            "strategy": "The current task graph has reached a conclusion regarding the question. The nodes have successfully identified that Gandzasar Stadium is located on the bank of the Voghji River in Kapan, and it is confirmed that FC Gandzasar Kapan is the club that plays there. Therefore, I propose a final task that consolidates these findings into a direct answer.",
+            "children": []
+        }
+    ]
+}

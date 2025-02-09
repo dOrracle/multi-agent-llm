@@ -1,0 +1,66 @@
+{
+    "final_answer": {
+        "explanation": "The SARI antidepressant with 18,786,495 prescriptions is Trazodone. According to the data, Trazodone is used to treat major depressive disorder, anxiety disorders, and, importantly, it is indicated for treating alcohol dependence when used in combination with other medications. Therefore, the specific substance dependency that Trazodone addresses is alcohol dependence. This information is critical as it directly correlates the SARI classification of Trazodone with its therapeutic applications, particularly in the context of substance dependency treatment.",
+        "answer": "Alcohol dependence"
+    },
+    "graph": [
+        {
+            "id": 108,
+            "title": "Find SARI Antidepressant",
+            "content": "<108>[Find SARI Antidepressant] Identify the SARI antidepressant with 18,786,495 prescriptions from the provided data.</108>",
+            "answer": "Trazodone is a SARI antidepressant that is used to treat major depressive disorder, anxiety disorders, and alcohol dependence when used in combination with other medications. It is classified as a serotonin antagonist and reuptake inhibitor (SARI), which means it works by blocking certain serotonin receptors while also inhibiting the reuptake of serotonin, norepinephrine, and dopamine. This dual action contributes to its effectiveness in treating depression and anxiety, as well as its role in managing alcohol dependence. \n\nCommon side effects of Trazodone include dry mouth, dizziness, and headache, while more serious side effects can include suicidal thoughts and irregular heart rates. Overall, Trazodone is a versatile medication that addresses multiple mental health issues, particularly in patients with co-occurring conditions.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": [
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
+            ],
+            "strategy": "The tasks are designed to systematically break down the question into manageable parts. The first task focuses on extracting the specific SARI antidepressant from the data, which is crucial for answering the question. The second task aims to identify the substance dependency that the identified antidepressant treats, directly addressing the core of the question. The third task provides a broader context by summarizing the uses and effects of the SARI antidepressant, which may provide additional insights into its application and relevance to substance dependency. This structured approach ensures clarity and thoroughness in addressing the question.",
+            "children": []
+        },
+        {
+            "id": 109,
+            "title": "Identify Treated Dependency",
+            "content": "<109>[Identify Treated Dependency] Determine the substance dependency treated by the identified SARI antidepressant.</109>",
+            "answer": "The SARI (Serotonin Antagonist and Reuptake Inhibitor) antidepressant with 18,786,495 prescriptions is Trazodone. According to the information provided, Trazodone is used to treat major depressive disorder, anxiety disorders, and, with other medications, alcohol dependence. Therefore, the substance dependency treated by Trazodone is alcohol dependence.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": "",
+            "strategy": "The tasks are designed to systematically break down the question into manageable parts. The first task focuses on extracting the specific SARI antidepressant from the data, which is crucial for answering the question. The second task aims to identify the substance dependency that the identified antidepressant treats, directly addressing the core of the question. The third task provides a broader context by summarizing the uses and effects of the SARI antidepressant, which may provide additional insights into its application and relevance to substance dependency. This structured approach ensures clarity and thoroughness in addressing the question.",
+            "children": [
+                117
+            ]
+        },
+        {
+            "id": 110,
+            "title": "Summarize SARI Effects",
+            "content": "<110>[Summarize SARI Effects] Compile a summary of the SARI antidepressant's uses and effects based on the data.</110>",
+            "answer": "The SARI antidepressant with 18,786,495 prescriptions is Trazodone. Trazodone is primarily used to treat major depressive disorder and anxiety disorders. It is also indicated for use in treating alcohol dependence when combined with other medications. Therefore, the substance dependency treated with Trazodone includes alcohol dependence.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": "",
+            "strategy": "The tasks are designed to systematically break down the question into manageable parts. The first task focuses on extracting the specific SARI antidepressant from the data, which is crucial for answering the question. The second task aims to identify the substance dependency that the identified antidepressant treats, directly addressing the core of the question. The third task provides a broader context by summarizing the uses and effects of the SARI antidepressant, which may provide additional insights into its application and relevance to substance dependency. This structured approach ensures clarity and thoroughness in addressing the question.",
+            "children": [
+                117
+            ]
+        },
+        {
+            "id": 117,
+            "title": "Final Answer on Dependency",
+            "content": "<117>[Final Answer on Dependency] Consolidate the findings from the existing nodes to provide a direct answer to the question regarding the substance dependency treated by the SARI antidepressant with 18,786,495 prescriptions.</117>",
+            "answer": {
+                "explanation": "The SARI antidepressant with 18,786,495 prescriptions is Trazodone. According to the data, Trazodone is used to treat major depressive disorder, anxiety disorders, and, importantly, it is indicated for treating alcohol dependence when used in combination with other medications. Therefore, the specific substance dependency that Trazodone addresses is alcohol dependence. This information is critical as it directly correlates the SARI classification of Trazodone with its therapeutic applications, particularly in the context of substance dependency treatment.",
+                "answer": "Alcohol dependence"
+            },
+            "depth": 0,
+            "layer": 0,
+            "subgraph": "",
+            "strategy": "The current task graph has reached a conclusion as it has successfully identified the SARI antidepressant (Trazodone) and the substance dependency it treats (alcohol dependence). The existing nodes provide sufficient information to directly answer the question without further exploration. Therefore, a final task is proposed to consolidate these findings into a clear answer.",
+            "children": []
+        }
+    ]
+}

@@ -1,0 +1,66 @@
+{
+    "final_answer": {
+        "explanation": "The task requires identifying the title of a book that serves as a prequel to 'The Hero and the Crown', authored by Robin McKinley, who graduated from Gould Academy in 1970. Based on the information gathered from previous tasks, it is established that Robin McKinley is indeed the author of both 'The Hero and the Crown' and its prequel. The prequel is titled 'The Blue Sword', which was published in 1982, two years prior to 'The Hero and the Crown', which was published in 1984. This confirms that 'The Blue Sword' is the correct title that precedes 'The Hero and the Crown' in McKinley's body of work.",
+        "answer": "The Blue Sword"
+    },
+    "graph": [
+        {
+            "id": 1220,
+            "title": "Find Author of Novel",
+            "content": "<1220>[Find Author of Novel] Identify the author of 'The Hero and the Crown'.</1220>",
+            "answer": "The title of the book that is a prequel to 'The Hero and the Crown' is 'The Blue Sword'. This conclusion is based on the information gathered from the context provided, which identifies Robin McKinley as the author of both works. 'The Hero and the Crown' was published in 1984 and is recognized for winning the Newbery Medal, while 'The Blue Sword' was published earlier in 1982, establishing its position as the narrative predecessor.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": [
+                {},
+                {},
+                {},
+                {}
+            ],
+            "strategy": "The question requires identifying the title of a book that is a prequel to 'The Hero and the Crown', written by a 1970 graduate of Gould Academy. The first task focuses on finding the author of 'The Hero and the Crown' to establish a connection to the graduate. The second task aims to gather publication details of 'The Hero and the Crown', which may provide insights into its context and related works. The third task directly addresses the need to identify the title of the prequel, ensuring a focused approach to the question.",
+            "children": [
+                1227
+            ]
+        },
+        {
+            "id": 1221,
+            "title": "Check Publication Details",
+            "content": "<1221>[Check Publication Details] Research the publication details of 'The Hero and the Crown'.</1221>",
+            "answer": "The book written by the 1970 Gould Academy graduate, Robin McKinley, for which \"The Hero and the Crown\" is the prequel, is titled \"The Blue Sword\". This information is found in the context provided, specifically in the details surrounding Robin McKinley and her works.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": "",
+            "strategy": "The question requires identifying the title of a book that is a prequel to 'The Hero and the Crown', written by a 1970 graduate of Gould Academy. The first task focuses on finding the author of 'The Hero and the Crown' to establish a connection to the graduate. The second task aims to gather publication details of 'The Hero and the Crown', which may provide insights into its context and related works. The third task directly addresses the need to identify the title of the prequel, ensuring a focused approach to the question.",
+            "children": [
+                1227
+            ]
+        },
+        {
+            "id": 1222,
+            "title": "Identify Prequel Title",
+            "content": "<1222>[Identify Prequel Title] Determine the title of the prequel to 'The Hero and the Crown'.</1222>",
+            "answer": "The title of the book written by Robin McKinley, a 1970 graduate of Gould Academy, for which 'The Hero and the Crown' is the prequel, is 'The Blue Sword'.",
+            "depth": 0,
+            "layer": 0,
+            "subgraph": "",
+            "strategy": "The question requires identifying the title of a book that is a prequel to 'The Hero and the Crown', written by a 1970 graduate of Gould Academy. The first task focuses on finding the author of 'The Hero and the Crown' to establish a connection to the graduate. The second task aims to gather publication details of 'The Hero and the Crown', which may provide insights into its context and related works. The third task directly addresses the need to identify the title of the prequel, ensuring a focused approach to the question.",
+            "children": [
+                1227
+            ]
+        },
+        {
+            "id": 1227,
+            "title": "Final Answer Task",
+            "content": "<1227>[Final Answer Task] Consolidate findings from the existing tasks to provide a direct answer to the question regarding the title of the book that is a prequel to 'The Hero and the Crown'.</1227>",
+            "answer": {
+                "explanation": "The task requires identifying the title of a book that serves as a prequel to 'The Hero and the Crown', authored by Robin McKinley, who graduated from Gould Academy in 1970. Based on the information gathered from previous tasks, it is established that Robin McKinley is indeed the author of both 'The Hero and the Crown' and its prequel. The prequel is titled 'The Blue Sword', which was published in 1982, two years prior to 'The Hero and the Crown', which was published in 1984. This confirms that 'The Blue Sword' is the correct title that precedes 'The Hero and the Crown' in McKinley's body of work.",
+                "answer": "The Blue Sword"
+            },
+            "depth": 0,
+            "layer": 0,
+            "subgraph": "",
+            "strategy": "The current task graph has reached a conclusion, as all relevant nodes have provided consistent answers regarding the title of the prequel to 'The Hero and the Crown'. Therefore, a final task is proposed to consolidate these findings into a direct answer.",
+            "children": []
+        }
+    ]
+}

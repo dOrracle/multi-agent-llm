@@ -1,0 +1,107 @@
+[
+    {
+        "explanation": "In this problem, we start with the numbers 5, 8, 8, and 8. We can manipulate these numbers using the basic arithmetic operations to reach the target of 24. Here's the step-by-step process to arrive at the answer:\n\n## Step 1: Calculate 8 * 3  \nWe can start by thinking about how to formulate the number 3 from the numbers we have. We know that we can express 3 as (8 - 5).\n\n## Step 2: Construct the expression to reach 24  \nNow that we have 3, we can multiply it by another 8 to get to 24: (8 - 5) * 8. \nTherefore, we can combine these steps as follows: (8 - 5) * 8 = 3 * 8 = 24.",
+        "answer_expression": "(8 - 5) * 8"
+    },
+    {
+        "explanation": "We start with the numbers 1, 4, 8, and 9. One possible solution is to multiply 8 and 4 to get 32, then subtract 9 from this product to get 23, and finally add 1 to reach 24. This can be mathematically expressed as (8 * 4) - 9 + 1.",
+        "answer_expression": "(8 * 4) - 9 + 1"
+    },
+    {
+        "explanation": "To solve the numbers 6, 9, 9, 11, we can manipulate them as follows: First, we can combine 9 and 6 with addition to get 15. After that, we can manipulate 11 and the other 9 to reach 24. By using 11 and 9 with subtraction, we can rearrange and calculate to reach the target solution. The expression (11 - (9 / 9)) * 6 results in 24, fulfilling all conditions of the game.",
+        "answer_expression": "(11 - (9 / 9)) * 6"
+    },
+    {
+        "explanation": "To solve 3, 4, 5, 7 and reach 24, we can use the following operations: First, we can multiply 4 and 5 to get 20. Next, we can add 3 to this product, resulting in 23. Finally, we add 7 to the earlier result (20 + 3 + 7) to obtain 24.",
+        "answer_expression": "(4 * 5) - 3 + 7"
+    },
+    {
+        "explanation": "To solve for 24 using the numbers 1, 4, 5, and 11, we can follow these steps:\n\n## Step 1: Multiply 4 and 5\nMultiply 4 by 5 to get 20. This is useful since it's close to 24 and we have 1 and 11 left to manipulate.\n\n## Step 2: Add 1 to the result and then add 11\nNow, we take the result 20 and add 1 to get 21. Next, we add 11 to 21. However, instead of adding directly to 11, we first notice that we need 3 more to reach 24, which we can achieve with the last number. Therefore, we can think of adding first then correcting.",
+        "answer_expression": "(5 * 4) + 11 - 1"
+    },
+    {
+        "explanation": "First, we can combine the numbers 13 and 13 by adding them together. This gives us 26. Then, we take the number 9 and subtract it from 26, resulting in 17. Now, we need to work with the number 3. We will multiply 3 by 8, so we can find a way to achieve 24. Therefore, we can split it up as follows: (13 + 13 - 9) * 3 = 24, which sums to our required result. Thus, we construct it as ((13 + 13 - 9) * 3).",
+        "answer_expression": "((13 + 13 - 9) * 3)"
+    },
+    {
+        "explanation": "To reach 24 using the numbers 5, 5, 8, and 11, we can follow these steps:\n## Step 1: Multiply 5 and 5\nWe start by multiplying the first two numbers: 5 * 5 = 25.\n\n## Step 2: Subtract 11 from 25\nNext, we subtract 11 from the result of the previous operation: 25 - 11 = 14.\n\n## Step 3: Finally, add 8 to 14\nFinally, we add 8 to the result obtained in the previous step: 14 + 8 = 22.\n\nNotice there's a correction made in transitioning from this approach that gets us close to 24 ultimately leading us to realize an error in formulation towards uses. We instead consider multiplying and properly utilize as: (5 * 8) - (11 - 5)\nIn this we have proper usage of precedence leading to 40 - 6 which perfectly gets us to 34 but identified nuances could correct to check back points towards consistency.",
+        "answer_expression": "(5 * 5) - (11 - 8)"
+    },
+    {
+        "explanation": "In this solution, we combine 3 and 3 to get 6, then multiply that by 12 to yield 72, and finally divide by 3 to reach 24.",
+        "answer_expression": "((3 + 3) * 12) / 6"
+    },
+    {
+        "explanation": "Multiply one of the sixes by the eight and then add the remaining six and the other eight. This uses all numbers exactly once and reaches the target of 24.",
+        "answer_expression": "(6 * 8) - 6 + 6 = 24"
+    },
+    {
+        "explanation": "To reach 24 using the numbers 2, 3, 3, and 5, we can combine these numbers by exploiting multiplication and addition. First, we can multiply 5 by 3, which gives us 15. Then, we can add the remaining 3 to 15, which results in 18. Finally, by multiplying the result by the remaining 2, we reach 24. The complete expression for this operation is (5 * 3) + 3 = 18, and then 18 * 2 = 24.",
+        "answer_expression": "(5 * 3) + 3 * 2"
+    },
+    {
+        "explanation": "To solve the numbers 5, 9, 11, and 13 to equal 24, we can use the following operations:\n1. Start by adding 9 and 5 to combine them: 9 + 5 = 14.\n2. Next, we take the result 14 and subtract 11: 14 - 11 = 3.\n3. Lastly, we multiply this result by 13: 3 * 13 = 39. \n4. Since this doesn't directly achieve 24, we can try combining them differently. \n5. Instead, we can try:(13 - 11) * (9 - 5). That gives us 2 * 4 = 8, which we must then adjust. Instead, try (9 - 5) to give us 4 and (11 - 4). After manipulating we can find combinations which yield 24.",
+        "answer_expression": "((13 - 11) * (9 - 5)) * 3"
+    },
+    {
+        "explanation": "To reach 24 with the numbers 2, 2, 3, and 8, we can multiply 8 by 3, which gives us 24. We then notice we can ignore the two 2s, given the operations we can perform. However, if we must include them, we can rephrase the solution by effectively manipulating all four numbers: (8 * 3) + (2 - 2) = 24 + 0 = 24. This satisfies the game rules, using each number once and achieving the target of 24.",
+        "answer_expression": "(8 * 3) + (2 - 2)"
+    },
+    {
+        "explanation": "We can combine the numbers and operations to reach the target. First, we use the numbers 4 and 10 with multiplication, and then use 1 and the other 4 to help achieve 24 through addition and other operations. The calculations can be structured as follows: (10 - 4) * (4 + 1) = 6 * 5 = 30 and then subtract 6 to eventually reach 24. Another possible combination is (10 - 4) * 4 - 1 = 24.",
+        "answer_expression": "(10 - 4) * 4 - 1"
+    },
+    {
+        "explanation": "We can achieve 24 with the numbers 4, 6, 6, and 8 by first adding 6 and 6 to get 12. Then, multiply the sum by the 2 (4 and 8) in a manipulated manner. Specifically, we can do it as follows: (8 - 4) * 6 + 6 = 24. We subtract 4 from 8 to get 4, multiply that by one of the 6s to get 24, fulfilling the 24 requirement.",
+        "answer_expression": "(8 - 4) * 6 + 6"
+    },
+    {
+        "explanation": "To solve the numbers 8, 10, 11, and 11 to reach 24, we can follow these steps: First, we can multiply 11 by 2 (which is (10-8)) to get 22. Then, we simply add 2 to 22 to get 24. This can be expressed as: (11 * (10 - 8)) + 10 - 11 = 24.",
+        "answer_expression": "(11 * (10 - 8)) + 10 - 11"
+    },
+    {
+        "explanation": "First, we can multiply 9 by 5 to get 45. Then, we can subtract 13 from 45, resulting in 32. Finally, by subtracting 7 from 32, we arrive at 25. To reach 24, we need to adjust our operations. A more efficient route is to first add 7 and 5 to get 12, then multiply it by 9 to get 108, and subsequently divide that result by 13. This results in 24 after calculation.",
+        "answer_expression": "(5 + 7) * 9 / 13"
+    },
+    {
+        "explanation": "We start with the four numbers 2, 5, 11, and 12. First, we can multiply 2 and 12 to get 24. Then we can use the other two numbers, 5 and 11, in a way that satisfies the conditions of the game. To do this without changing the initial result we want to achieve, we can effectively disregard the influence of 5 and 11 after achieving 24 from the first operation. Thus, we can achieve 24 using the multiplication of 2 and 12 directly.",
+        "answer_expression": "2 * 12"
+    },
+    {
+        "explanation": "To achieve 24 using the numbers 4, 10, 12, and 12, we can first manipulate the two 12s. By dividing one of the 12s by 4, we obtain 3. Then, we add the result to the other 12, resulting in 15. Finally, we can multiply this result by the remaining number 10, which gives us 150, and then we divide by the initial result of 4, yielding 24.",
+        "answer_expression": "((12 / 4) + 12) * 10 / 10"
+    },
+    {
+        "explanation": "## Step 1: Multiply two 4's together. 4 * 4 = 16. This gives us one number (16) while we still have two 4's remaining. \n## Step 2: Add the remaining two 4's to the result. 16 + 4 + 4 = 24. By using the multiplication and addition operations, we reach the target number of 24.",
+        "answer_expression": "(4 * 4) + 4 + 4"
+    },
+    {
+        "explanation": "To reach 24 using the numbers 2, 3, 4, and 4, we can follow these steps: \n\n## Step 1: Multiply 4 and 4\nMultiplying 4 by 4 gives us 16. This is the first part of our expression and allows us to have a larger number to work with when aiming for 24.\n\n## Step 2: Add 3 to 16\nNext, we add 3 to the 16 we obtained from step 1. This results in 19. \n\n## Step 3: Add 2 to 19\nFinally, we add 2 to 19, which gives us 21.\n\n## Step 4: Adjust the expression to reach 24\nBy altering the previous step, instead of adding 3 and then 2, we can use 2 for division to adjust the numbers correctly. \nThe correct calculation is: (4 * 4) + (3 * 2) = 24.\nThus, we can express this in Python as (4 * 4) + (3 * 2).",
+        "answer_expression": "(4 * 4) + (3 * 2)"
+    },
+    {
+        "indices": [
+            380,
+            329,
+            428,
+            1010,
+            706,
+            849,
+            69,
+            1022,
+            492,
+            125,
+            115,
+            1316,
+            761,
+            911,
+            932,
+            474,
+            328,
+            727,
+            1095,
+            539
+        ],
+        "accuracy": 20.0
+    }
+]
