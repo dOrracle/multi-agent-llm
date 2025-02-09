@@ -12,7 +12,7 @@ pip install -U multi-agent-llm
 ```python
 import os; os.environ['OPENAI_API_KEY'] = "your_openai_api_key"
 
-from multi_agent_llm import OpenAILLM, AIOT
+from multi_agent_llm import OpenAILLM, AGOT
 from pydantic import BaseModel, Field
 
 llm = OpenAILLM(model_name="gpt-4o-mini", temperature=0.3)
