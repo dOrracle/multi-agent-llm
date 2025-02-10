@@ -75,4 +75,4 @@ EXPLANATION: The analysis of the quasar's distance was based on comoving distanc
 
 ------
 
-This repository also contains the results for the paper [Iteration of Thought](https://arxiv.org/abs/2409.12618) and *Adaptive Graph of Thoughts* (coming soon). You can find the relevant [experimental setups, datasets, and results](./examples). The folder contains results from various tasks. Feel free to explore these folders to reproduce the experiments or to get a deeper understanding of how the AIOT, GIOT, and AGoT frameworks work in practice.
+This repository also contains the results for the paper [Iteration of Thought](https://arxiv.org/abs/2409.12618) and [Adaptive Graph of Thoughts](https://arxiv.org/abs/2502.05078). You can find the relevant [experimental setups, datasets, and results](./examples). The folder contains results from various tasks. Feel free to explore these folders to reproduce the experiments or to get a deeper understanding of how the AIOT, GIOT, and AGoT frameworks work in practice.
