@@ -166,18 +166,19 @@ class MultiAgentBase(Generic[T]):
 
         if loop.is_running():
             # We're likely in a Jupyter environment
-            return asyncio.ensure_future(self._run_async_impl(query))
+            raise RuntimeError("Cannot use run() inside a running event loop. Use run_async() instead.")
         else:
             return loop.run_until_complete(self._run_async_impl(query))
 
-    def run_async(self, query: str) -> Future:
+    def run_async(self, query: str) -> Future[DiscussionResult[T]]:
+        from typing import cast
         try:
             loop = asyncio.get_event_loop()
         except RuntimeError:
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
 
-        future = loop.create_future()
+        future = cast(Future[DiscussionResult[T]], loop.create_future())
         asyncio.ensure_future(self._run_async_and_set_future(query, future))
         return future
 

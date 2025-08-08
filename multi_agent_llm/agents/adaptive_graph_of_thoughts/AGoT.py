@@ -7,7 +7,7 @@ import warnings
 from dataclasses import dataclass
 from enum import Enum, auto
 from time import perf_counter
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union, Type
 
 import nest_asyncio
 import networkx as nx
@@ -25,6 +25,16 @@ from multi_agent_llm.agents.adaptive_graph_of_thoughts.templates import (
     USER_PROMPT_INITIAL_SUB_TASK, USER_PROMPT_INITIAL_TASK,
     USER_PROMPT_NEW_TASK)
 from multi_agent_llm.llm import LLMBase
+
+# Import web search utilities
+try:
+    from web_search_tool import should_search_web, get_web_context
+except ImportError:
+    # Graceful fallback if web_search_tool is not available
+    async def should_search_web(llm, question: str, context: str = "") -> bool:
+        return False
+    async def get_web_context(question: str, num_results: int = 3) -> dict:
+        return {}
 
 
 class PromptCategory(Enum):
@@ -191,7 +201,7 @@ class AGOTLogger:
                 complexity_text = " (complex)" if is_complex else " (simple)"
                 styled_text.append(complexity_text, style=complexity_style)
 
-            if node_id in self.start_times:
+            if isinstance(node_id, int) and node_id in self.start_times:
                 elapsed_time = self.get_elapsed_time(node_id)
                 time_str = self.format_time(elapsed_time)
                 styled_text.append(f" [{time_str}]", style="bright_black")
@@ -209,7 +219,7 @@ class AGOTLogger:
                 complexity_text = " (complex)" if is_complex else " (simple)"
                 styled_text.append(complexity_text, style=complexity_style)
 
-            if node_id in self.start_times:
+            if isinstance(node_id, int) and node_id in self.start_times:
                 elapsed_time = self.get_elapsed_time(node_id)
                 time_str = self.format_time(elapsed_time)
                 styled_text.append(f" [{time_str}]", style="bright_black")
@@ -324,14 +334,15 @@ class AGOT:
             nodes.append(f"<ID> {node_id} </ID>/n <Title>: {title}</Title>")
         return "\n".join(nodes)
 
+    from typing import Optional, Union
     def _add_task(
         self,
         task: Task,
-        parent_id: Union[int, List[int]] = None,
-        dag: nx.DiGraph = None,
+        parent_id: Optional[Union[int, List[int]]] = None,
+        dag: Optional[nx.DiGraph] = None,
         depth: int = 0,
         layer: int = 0,
-        strategy: str = None,
+        strategy: Optional[str] = None,
     ) -> Tuple[int, nx.DiGraph]:
         """
         Add a task to the graph as a node.
@@ -372,6 +383,8 @@ class AGOT:
                     if _id != _parent_id and not dag.has_edge(_parent_id, _id):
                         dag.add_edge(_parent_id, _id)
 
+        if dag is None:
+            dag = nx.DiGraph()
         return _id, dag
 
     def _format_task(self, _id: int, task: Task) -> str:
@@ -399,7 +412,7 @@ class AGOT:
         """
         return json.dumps(strategy)
 
-    def run(self, question: str, schema: BaseModel = None) -> Optional[FinalAnswer]:
+    def run(self, question: str, schema: Optional[Type[BaseModel]] = None) -> Optional[FinalAnswer]:
         """
         Synchronously run the AGOT framework to generate a response to the given question.
 
@@ -419,7 +432,7 @@ class AGOT:
         return asyncio.run(self.run_async(question, schema))
 
     async def run_async(
-        self, question: str, schema: BaseModel = None
+        self, question: str, schema: Optional[Type[BaseModel]] = None
     ) -> FinalAnswer:
         """
         Asynchronously run the AGOT framework to generate a response to the given question.
@@ -432,12 +445,12 @@ class AGOT:
             Final Answer (FinalAnswer): The final answer to the question in the required format 
         """
         self.user_schema = schema  # Schema for final response
-        dag = nx.DiGraph()  # Initie a Directed Graph
+        dag = nx.DiGraph()  # Initialize a Directed Graph
         final_response = None
         if self.verbose >= 4:
             self._log(4, "Starting task processing")
 
-        # Geerate initial tasks and strategy
+        # Generate initial tasks and strategy (NO web search in this test)
         initial_tasks, strategy = await self._generate_initial_tasks(question)
         depth = 0
         layer = 0
@@ -516,7 +529,7 @@ class AGOT:
                         task_id=final_node_id,
                         task=new_tasks,
                         question=question,
-                        final_schema=self.user_schema,
+                        final_schema=self.user_schema if self.user_schema is not None else None,
                         dag=dag,
                     )
 
@@ -542,39 +555,39 @@ class AGOT:
                 # The loop continues and these tasks will be evaluated
 
         # If max layers is reached without final answer
-        if final_response is None:
-            node_list_str = self.get_node_list(dag=dag)
-            # Force generate the fnal task
-            final_task = await self._generate_final_task(
-                question=question,
-                depth=depth,
-                node_list_str=node_list_str,
-                dag=dag,
-            )
-            # Use all the nodes in the graph as parents
-            parent_ids = list(dag.nodes)
-            final_node_id, dag = self._add_task(
-                final_task,
-                dag=dag,
-                depth=depth,
-                layer=self.max_num_layers,
-                parent_id=parent_ids,
-                strategy=strategy,
-            )
-            # Evaluate the final task
-            final_answer = await self._evaluate_task(
-                task_id=final_node_id,
-                task=final_task,
-                question=question,
-                final_schema=self.user_schema,
-                dag=dag,
-            )
+        # If max layers is reached without final answer
+        node_list_str = self.get_node_list(dag=dag)
+        # Force generate the final task
+        final_task = await self._generate_final_task(
+            question=question,
+            depth=depth,
+            node_list_str=node_list_str,
+            dag=dag,
+        )
+        # Use all the nodes in the graph as parents
+        parent_ids = list(dag.nodes)
+        final_node_id, dag = self._add_task(
+            final_task,
+            dag=dag,
+            depth=depth,
+            layer=self.max_num_layers,
+            parent_id=parent_ids,
+            strategy=strategy,
+        )
+        # Evaluate the final task
+        final_answer = await self._evaluate_task(
+            task_id=final_node_id,
+            task=final_task,
+            question=question,
+            final_schema=self.user_schema if self.user_schema is not None else None,
+            dag=dag,
+        )
 
-            dag.nodes[final_node_id]["answer"] = final_answer
-            return FinalAnswer(
-                final_answer=final_answer,
-                graph=self.export_graph(dag),
-            )
+        dag.nodes[final_node_id]["answer"] = final_answer
+        return FinalAnswer(
+            final_answer=final_answer,
+            graph=self.export_graph(dag),
+        )
 
     def format_all_answers(self, dag: nx.DiGraph) -> str:
         """
@@ -615,10 +628,15 @@ class AGOT:
             max_new_tasks=self.max_new_tasks,
             dag=None,
         )
-        return [response.tasks, response.strategy]
+        tasks = getattr(response, "tasks", None)
+        strategy = getattr(response, "strategy", None)
+        if tasks is not None and strategy is not None:
+            return tasks, strategy
+        else:
+            raise TypeError("Response missing tasks or strategy in _generate_initial_tasks")
 
     async def _generate_initial_sub_tasks(
-        self, task: Task, question: str, dag: nx.DiGraph = None
+        self, task: Task, question: str, dag: Optional[nx.DiGraph] = None
     ) -> Tuple[List[Task], str]:
         """
         Generate initial tasks for subgraphs.
@@ -640,7 +658,12 @@ class AGOT:
             task=task,
             dag=dag,
         )
-        return response.tasks, response.strategy
+        tasks = getattr(response, "tasks", None)
+        strategy = getattr(response, "strategy", None)
+        if tasks is not None and strategy is not None:
+            return tasks, strategy
+        else:
+            raise TypeError("Response missing tasks or strategy in _generate_initial_sub_tasks")
 
     async def process_task(
         self,
@@ -849,36 +872,36 @@ class AGOT:
                     layer_dict[layer+1].append((node_sub_id, new_task))
                 # The loop continues and these tasks will be evaluated
 
-        if final_response is None:
-            node_list_str = self.get_node_list(dag=subgraph)
-            # Force generate the final task
-            final_task = await self._generate_final_task(
-                question=question,
-                depth=depth,
-                node_list_str=node_list_str,
-                dag=subgraph,
-            )
-            # Use all the nodes in the subgraph as parents
-            parent_ids = list(subgraph.nodes)
-            final_node_id, subgraph = self._add_task(
-                final_task,
-                dag=subgraph,
-                depth=depth,
-                layer=self.max_num_layers + 1,
-                parent_id=parent_ids,
-                strategy=strategy,
-            )
-            # Evaluate the final task
-            final_answer = await self._evaluate_task(
-                task_id=final_node_id,
-                task=final_task,
-                question=question,
-                final_schema=None,
-                dag=subgraph,
-            )
+        # If final_response is None, force generate the final task and return
+        node_list_str = self.get_node_list(dag=subgraph)
+        # Force generate the final task
+        final_task = await self._generate_final_task(
+            question=question,
+            depth=depth,
+            node_list_str=node_list_str,
+            dag=subgraph,
+        )
+        # Use all the nodes in the subgraph as parents
+        parent_ids = list(subgraph.nodes)
+        final_node_id, subgraph = self._add_task(
+            final_task,
+            dag=subgraph,
+            depth=depth,
+            layer=self.max_num_layers + 1,
+            parent_id=parent_ids,
+            strategy=strategy,
+        )
+        # Evaluate the final task
+        final_answer = await self._evaluate_task(
+            task_id=final_node_id,
+            task=final_task,
+            question=question,
+            final_schema=None,
+            dag=subgraph,
+        )
 
-            subgraph.nodes[final_node_id]["answer"] = final_answer.content
-            return final_answer.content, subgraph
+        subgraph.nodes[final_node_id]["answer"] = final_answer.content
+        return final_answer.content, subgraph
 
     def _log(
         self,
@@ -970,12 +993,11 @@ class AGOT:
         )
         if isinstance(response, FinalTask):
             return response
-        if isinstance(response.tasks, FinalTask):
-            return response.tasks
-        elif isinstance(response.tasks, list) and isinstance(
-            response.tasks[0], FinalTask
-        ):
-            return response.tasks[0]
+        tasks = getattr(response, "tasks", None)
+        if isinstance(tasks, FinalTask):
+            return tasks
+        elif isinstance(tasks, list) and len(tasks) > 0 and isinstance(tasks[0], FinalTask):
+            return tasks[0]
         else:
             raise ValueError("Failed to generate a final task.")
 
@@ -1000,7 +1022,7 @@ class AGOT:
         task_graph: str,
         strategy_dict: Dict[int, str],
         force_final_task: bool = False,
-        dag: nx.DiGraph = None,
+        dag: Optional[nx.DiGraph] = None,
     ) -> Tuple[Union[List[NewTask], FinalTask], str]:
         """
         Generate new tasks in a graph.
@@ -1030,28 +1052,34 @@ class AGOT:
             dag=dag,
             layer_strategy=self._format_strategy(strategy_dict),
         )
+        tasks = getattr(response, "tasks", None)
+        strategy = getattr(response, "strategy", None)
         try:
+            node_id_val = None
+            if dag is not None and hasattr(dag, "nodes"):
+                node_id_val = list(dag.nodes) if dag.nodes else None
             self._log(
                 3,
                 "Generated new tasks",
                 depth=depth,
-                node_id=(list(dag.nodes) if dag.nodes else None),
+                node_id=node_id_val,
                 dag=dag,
-                context={"new_tasks": [str([list(set(task.parent_id))]) for task in response.tasks] if not isinstance(
-                    response.tasks, FinalTask) else response.tasks.parent_id},
+                context={"new_tasks": [str([list(set(task.parent_id))]) for task in tasks] if tasks is not None and not isinstance(tasks, FinalTask) else getattr(tasks, "parent_id", None)},
             )
-        except:
+        except Exception:
             pass
-
-        return response.tasks, response.strategy
+        if tasks is not None and strategy is not None:
+            return tasks, strategy
+        else:
+            raise TypeError("Response missing tasks or strategy in _generate_new_tasks")
 
     async def _evaluate_task(
         self,
         task_id: int,
         task: Task,
         question: str,
-        final_schema: BaseModel = None,
-        dag: nx.DiGraph = None,
+        final_schema: Optional[type] = None,
+        dag: Optional[nx.DiGraph] = None,
     ) -> EvaluateTask:
         """
         Evaluate the task.
@@ -1068,8 +1096,46 @@ class AGOT:
         """
 
         # Get answers corresponding to the ancestors of a given node
-        task_graph_str = self.get_ancestors_answers(task_id, dag)
+        task_graph_str = self.get_ancestors_answers(task_id, dag if dag is not None else nx.DiGraph())
+        
+        # Check if web search is needed for this task
+        web_context = ""
+        try:
+            # Try importing web search tool with different paths
+            try:
+                from web_search_tool import should_search_web, get_web_context
+            except ImportError:
+                # Try relative import from project root
+                import sys
+                import os
+                project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+                if project_root not in sys.path:
+                    sys.path.insert(0, project_root)
+                from web_search_tool import should_search_web, get_web_context
+            
+            # Create a combined context for web search decision
+            search_context = f"Task: {task.title}\nContent: {task.content}\nQuestion: {question}"
+            
+            # Check if we need web search
+            if await should_search_web(self.llm, search_context):
+                web_context = await get_web_context(search_context)
+                if self.verbose >= 1:
+                    print(f"🌐 Web search performed for task {task_id}: {task.title}")
+        except Exception as e:
+            if self.verbose >= 1:
+                print(f"⚠️ Web search failed for task {task_id}: {e}")
+            web_context = ""
+        
+        from typing import cast
         if final_schema is None:
+            # Format web context for the prompt
+            formatted_web_context = ""
+            if web_context:
+                if isinstance(web_context, dict) and 'web_context' in web_context:
+                    formatted_web_context = f"\nWeb Search Results:\n{web_context['web_context']}"
+                elif isinstance(web_context, str) and web_context.strip():
+                    formatted_web_context = f"\nWeb Search Results:\n{web_context}"
+                
             response = await self._generate(
                 category=PromptCategory.TASK_EXECUTION,
                 schema=EvaluateTask,
@@ -1079,8 +1145,15 @@ class AGOT:
                 task_content=task.content,
                 question=question,
                 task_graph=task_graph_str,
+                web_context=formatted_web_context
             )
+            if isinstance(response, EvaluateTask):
+                return cast(EvaluateTask, response)
+            raise TypeError("Response is not of type EvaluateTask")
         else:
+            # final_schema should be a type, not an instance
+            if not isinstance(final_schema, type):
+                raise TypeError("final_schema must be a type, not an instance")
             response = await self._generate(
                 category=PromptCategory.FINAL_TASK_EXECUTION,
                 schema=final_schema,
@@ -1089,17 +1162,18 @@ class AGOT:
                 task_title=task.title,
                 task_content=task.content,
                 question=question,
-                task_graph=task_graph_str,
+                task_graph=task_graph_str
             )
-
-        return response
+            if isinstance(response, final_schema):
+                return cast(EvaluateTask, response)
+            raise TypeError(f"Response is not of type {final_schema}")
 
     async def _check_complex(
         self,
         task_id: int,
         task: Task,
         depth: int = 0,
-        dag: nx.DiGraph = None,
+        dag: Optional[nx.DiGraph] = None,
         main_graph: str = "",
     ) -> CheckComplex:
         """
@@ -1125,13 +1199,17 @@ class AGOT:
             dag=dag,
             depth=depth,
         )
-        return response
+        if isinstance(response, CheckComplex):
+            return response
+        else:
+            raise TypeError("Response is not of type CheckComplex")
 
+    from typing import Type
     async def _generate(
         self,
         category: PromptCategory,
-        schema: BaseModel,
-        dag: nx.DiGraph = None,
+        schema: Type[BaseModel],
+        dag: Optional[nx.DiGraph] = None,
         **user_kwargs,
     ) -> BaseModel:
         """
@@ -1180,7 +1258,7 @@ class AGOT:
                 dag=dag,
                 response=str(response),
             )
-        return response
+        return response if isinstance(response, BaseModel) else schema()
 
     def graph_to_string(self, dag: nx.DiGraph) -> str:
         """

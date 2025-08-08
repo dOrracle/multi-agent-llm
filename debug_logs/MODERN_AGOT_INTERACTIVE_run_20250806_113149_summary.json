@@ -1,0 +1,174 @@
+{
+  "summary": {
+    "session_info": {
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505109",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "total_duration": 177.17277193069458,
+      "start_time": "2025-08-06T11:31:49.521796",
+      "end_time": "2025-08-06T11:34:46.694580"
+    },
+    "operation_summary": {
+      "total_operations": 10,
+      "operation_counts": {
+        "LOGGER": 1,
+        "ENVIRONMENT": 1,
+        "MODERN": 1,
+        "LLM": 2,
+        "AGOT": 4,
+        "AGENT": 1
+      },
+      "error_count": 0,
+      "success_rate": "100.0%",
+      "total_api_calls": 0
+    },
+    "performance_metrics": {
+      "average_operation_time": 23.081670713424682,
+      "longest_operation": "LogEntry(timestamp='2025-08-06T11:33:44.967617', session_id='MODERN_AGOT_INTERACTIVE_1754505109', agent_type='MODERN_AGOT_INTERACTIVE', operation='AGOT_EXECUTION_END', status='SUCCESS', duration=115.37804222106934, details={'execution_time': 115.37235188484192, 'result_length': 39699}, error=None)",
+      "total_execution_time": 177.17277193069458
+    }
+  },
+  "logs": [
+    {
+      "timestamp": "2025-08-06T11:31:49.521901",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505109",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "LOGGER_INIT",
+      "status": "SUCCESS",
+      "duration": 0,
+      "details": {
+        "agent_type": "MODERN_AGOT_INTERACTIVE",
+        "session_id": "MODERN_AGOT_INTERACTIVE_1754505109",
+        "log_file": "/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/debug_logs/MODERN_AGOT_INTERACTIVE_run_20250806_113149.json"
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:31:49.522312",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505109",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "ENVIRONMENT_CHECK",
+      "status": "SUCCESS",
+      "duration": 0,
+      "details": {
+        "python_version": "3.12.2 | packaged by conda-forge | (main, Feb 16 2024, 21:00:12) [Clang 16.0.6 ]",
+        "working_directory": "/",
+        "has_gemini_key": true,
+        "has_tavily_key": true,
+        "env_vars_loaded": true
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:31:49.522483",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505109",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "MODERN_EXECUTION_START",
+      "status": "SUCCESS",
+      "duration": 0,
+      "details": {
+        "session_id": "modern_preview_1754504879",
+        "enhancement_decision": "enhanced",
+        "enhancement_used": false,
+        "final_query_length": 17,
+        "execution_strategy": "standard_analysis"
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:31:49.522640",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505109",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "LLM_INITIALIZATION_START",
+      "status": "IN_PROGRESS",
+      "duration": 0,
+      "details": {
+        "model": "gemini-2.5-flash"
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:31:49.588679",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505109",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "LLM_INITIALIZATION_END",
+      "status": "SUCCESS",
+      "duration": 0.06602621078491211,
+      "details": {},
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:31:49.589113",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505109",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "AGOT_INITIALIZATION_START",
+      "status": "IN_PROGRESS",
+      "duration": 0,
+      "details": {
+        "max_concurrent_tasks": 10,
+        "max_depth": 1,
+        "max_new_tasks": 3,
+        "max_num_layers": 3
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:31:49.589392",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505109",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "AGOT_INITIALIZATION_END",
+      "status": "SUCCESS",
+      "duration": 0.0002837181091308594,
+      "details": {},
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:31:49.589560",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505109",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "AGOT_EXECUTION_START",
+      "status": "IN_PROGRESS",
+      "duration": 0,
+      "details": {
+        "query_length": 17,
+        "has_web_context": false
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:33:44.965879",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505109",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "AGENT_EXECUTION",
+      "status": "SUCCESS",
+      "duration": 115.37235498428345,
+      "details": {
+        "agent_config": {
+          "type": "AGoT",
+          "max_concurrent_tasks": 10,
+          "max_depth": 1,
+          "max_new_tasks": 3,
+          "max_num_layers": 3
+        },
+        "input_query": "No query provided",
+        "execution_duration": 115.37235498428345,
+        "result_length": 39699,
+        "result_type": "FinalAnswer",
+        "result_preview": "final_answer=EvaluateTask(content=\"This concluding assessment synthesizes the findings from the preceding tasks. As per the initial explicit request for input (Node 0), the problem query remains unpro..."
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:33:44.967617",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505109",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "AGOT_EXECUTION_END",
+      "status": "SUCCESS",
+      "duration": 115.37804222106934,
+      "details": {
+        "execution_time": 115.37235188484192,
+        "result_length": 39699
+      },
+      "error": null
+    }
+  ]
+}

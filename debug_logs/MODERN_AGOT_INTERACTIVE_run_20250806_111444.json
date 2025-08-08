@@ -1,0 +1,142 @@
+{
+  "timestamp": "2025-08-06T11:14:44.971198",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754504084",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "LOGGER_INIT",
+  "status": "SUCCESS",
+  "duration": 0,
+  "details": {
+    "agent_type": "MODERN_AGOT_INTERACTIVE",
+    "session_id": "MODERN_AGOT_INTERACTIVE_1754504084",
+    "log_file": "/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/debug_logs/MODERN_AGOT_INTERACTIVE_run_20250806_111444.json"
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T11:14:44.971596",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754504084",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "ENVIRONMENT_CHECK",
+  "status": "SUCCESS",
+  "duration": 0,
+  "details": {
+    "python_version": "3.12.2 | packaged by conda-forge | (main, Feb 16 2024, 21:00:12) [Clang 16.0.6 ]",
+    "working_directory": "/Users/kre8orr/local_projects/MCP/Multi_Thought/mcp-server",
+    "has_gemini_key": true,
+    "has_tavily_key": true,
+    "env_vars_loaded": true
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T11:14:44.971739",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754504084",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "MODERN_EXECUTION_START",
+  "status": "SUCCESS",
+  "duration": 0,
+  "details": {
+    "session_id": null,
+    "enhancement_decision": "enhanced",
+    "enhancement_used": true,
+    "final_query_length": 495,
+    "execution_strategy": "standard_analysis"
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T11:14:44.971905",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754504084",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "LLM_INITIALIZATION_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "model": "gemini-2.5-flash"
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T11:14:44.986065",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754504084",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "LLM_INITIALIZATION_END",
+  "status": "SUCCESS",
+  "duration": 0.014159202575683594,
+  "details": {},
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T11:14:44.986370",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754504084",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "AGOT_INITIALIZATION_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "max_concurrent_tasks": 10,
+    "max_depth": 1,
+    "max_new_tasks": 3,
+    "max_num_layers": 3
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T11:14:44.986646",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754504084",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "AGOT_INITIALIZATION_END",
+  "status": "SUCCESS",
+  "duration": 0.0002810955047607422,
+  "details": {},
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T11:14:44.986806",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754504084",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "AGOT_EXECUTION_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "query_length": 495,
+    "has_web_context": false
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T11:17:12.578425",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754504084",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "AGENT_EXECUTION",
+  "status": "SUCCESS",
+  "duration": 147.58618712425232,
+  "details": {
+    "agent_config": {
+      "type": "AGoT",
+      "max_concurrent_tasks": 10,
+      "max_depth": 1,
+      "max_new_tasks": 3,
+      "max_num_layers": 3
+    },
+    "input_query": "To provide precise, actionable guidance on 'how should I proceed if I don't get paid,' addressing the core issue of non-payment for services rendered or work performed, it is crucial to move beyond the original broad query and establish specific circumstances. For maximum clarity and effective advice, please detail the critical parameters, operational constraints, success criteria, boundary conditions, and validation requirements necessary to fully understand the nature of this non-payment.",
+    "execution_duration": 147.58618712425232,
+    "result_length": 59723,
+    "result_type": "FinalAnswer",
+    "result_preview": "final_answer=EvaluateTask(content=\"This task consolidates the insights from the preceding analytical tasks into a comprehensive framework for understanding non-payment circumstances. The detailed answ..."
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T11:17:12.581478",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754504084",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "AGOT_EXECUTION_END",
+  "status": "SUCCESS",
+  "duration": 147.59460306167603,
+  "details": {
+    "execution_time": 147.5861361026764,
+    "result_length": 59723
+  },
+  "error": null
+}

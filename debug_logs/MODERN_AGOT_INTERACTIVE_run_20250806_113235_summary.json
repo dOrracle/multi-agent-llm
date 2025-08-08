@@ -1,0 +1,162 @@
+{
+  "summary": {
+    "session_info": {
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505155",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "total_duration": 26.70063328742981,
+      "start_time": "2025-08-06T11:32:35.472583",
+      "end_time": "2025-08-06T11:33:02.173229"
+    },
+    "operation_summary": {
+      "total_operations": 10,
+      "operation_counts": {
+        "LOGGER": 1,
+        "ENVIRONMENT": 1,
+        "MODERN": 1,
+        "LLM": 2,
+        "AGOT": 5
+      },
+      "error_count": 2,
+      "success_rate": "80.0%",
+      "total_api_calls": 0
+    },
+    "performance_metrics": {
+      "average_operation_time": 2.669902729988098,
+      "longest_operation": "LogEntry(timestamp='2025-08-06T11:33:02.172852', session_id='MODERN_AGOT_INTERACTIVE_1754505155', agent_type='MODERN_AGOT_INTERACTIVE', operation='AGOT_EXECUTION_END', status='ERROR', duration=26.641693115234375, details={}, error='Gemini API error: Could not parse response into InitialTask: {\\n  \"tasks\": [\\n    {\\n      \"content\": \"This sub-task involves identifying and formally defining each distinct agent type required for the multi-agent trading system (e.g., Market Data Agent, Strategy Agent, Order Execution Agent, Portfolio Management Agent, Risk Management Agent). For each agent, its primary role, key responsibilities, and high-level functions will be outlined. This step establishes the conceptual boundaries and purpose of each component, forming the foundational understanding for subsequent design phases.\",\\n      \"title\": \"Define Agent Types & Core Responsibilities\"\\n     Cohere\\n    },\\n    {\\n      \"content\": \"Building upon the defined agent types, this sub-task focuses on specifying the concrete interfaces for each agent, detailing the types of messages they send and receive, and the data structures involved. It includes designing the interaction patterns between agents (e.g., request-response, publish-subscribe) to ensure efficient and reliable communication of market data, trade signals, order status, portfolio updates, and risk alerts. This defines the \\'API\\' contract between system components, crucial for interoperability and testability.\",\\n      \"title\": \"Design Agent Interfaces & Interaction Patterns\"\\n    },\\n    {\\n      \"content\": \"This sub-task specifically addresses the internal design of the \\'Strategy Agent(s)\\' to support modular, testable, and dynamically configurable trading strategies. It involves defining how individual trading strategies will be structured, implemented (e.g., as pluggable modules or classes), and how they can be dynamically loaded, updated, or enabled/disabled at runtime without requiring a full system restart. Considerations include strategy parameterization, backtesting integration points, and the mechanism for strategies to receive market data and issue trade signals.\",\\n      \"title\": \"Architect Strategy Management in Strategy Agent\"\\n    }\\n  ],\\n  \"strategy\": \"The primary task, \\'Design Agent Modularity & Strategy Encapsulation\\', encompasses two main areas: the overall agent architecture (types, roles, interfaces) and the specific design of strategy management within the Strategy Agent. To effectively address this, the strategy is to first define the individual agents and their core functions. This establishes the \\'what\\'. Next, detail how these agents will interact via their interfaces, defining the \\'how\\' of inter-agent communication. Finally, focus on the internal mechanisms for managing trading strategies independently within the Strategy Agent, addressing the \\'how\\' of strategy logic. This sequential breakdown ensures that the foundational structure is established before delving into the specifics of inter-agent communication contracts and then the specialized logic for strategy handling, supporting modular development and clear separation of concerns without overlapping with existing high-level infrastructure tasks.\"\\n}')",
+      "total_execution_time": 26.70063328742981
+    }
+  },
+  "logs": [
+    {
+      "timestamp": "2025-08-06T11:32:35.472667",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505155",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "LOGGER_INIT",
+      "status": "SUCCESS",
+      "duration": 0,
+      "details": {
+        "agent_type": "MODERN_AGOT_INTERACTIVE",
+        "session_id": "MODERN_AGOT_INTERACTIVE_1754505155",
+        "log_file": "/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/debug_logs/MODERN_AGOT_INTERACTIVE_run_20250806_113235.json"
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:32:35.473029",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505155",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "ENVIRONMENT_CHECK",
+      "status": "SUCCESS",
+      "duration": 0,
+      "details": {
+        "python_version": "3.12.2 | packaged by conda-forge | (main, Feb 16 2024, 21:00:12) [Clang 16.0.6 ]",
+        "working_directory": "/",
+        "has_gemini_key": true,
+        "has_tavily_key": true,
+        "env_vars_loaded": true
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:32:35.473196",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505155",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "MODERN_EXECUTION_START",
+      "status": "SUCCESS",
+      "duration": 0,
+      "details": {
+        "session_id": null,
+        "enhancement_decision": "original",
+        "enhancement_used": false,
+        "final_query_length": 87,
+        "execution_strategy": "standard_analysis"
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:32:35.473354",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505155",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "LLM_INITIALIZATION_START",
+      "status": "IN_PROGRESS",
+      "duration": 0,
+      "details": {
+        "model": "gemini-2.5-flash"
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:32:35.530430",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505155",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "LLM_INITIALIZATION_END",
+      "status": "SUCCESS",
+      "duration": 0.05707216262817383,
+      "details": {},
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:32:35.530752",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505155",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "AGOT_INITIALIZATION_START",
+      "status": "IN_PROGRESS",
+      "duration": 0,
+      "details": {
+        "max_concurrent_tasks": 10,
+        "max_depth": 1,
+        "max_new_tasks": 3,
+        "max_num_layers": 3
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:32:35.531010",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505155",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "AGOT_INITIALIZATION_END",
+      "status": "SUCCESS",
+      "duration": 0.0002620220184326172,
+      "details": {},
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:32:35.531152",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505155",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "AGOT_EXECUTION_START",
+      "status": "IN_PROGRESS",
+      "duration": 0,
+      "details": {
+        "query_length": 87,
+        "has_web_context": false
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T11:33:02.172296",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505155",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "AGOT_EXECUTION_ERROR",
+      "status": "ERROR",
+      "duration": 0,
+      "details": {
+        "error_type": "Exception",
+        "error_message": "Gemini API error: Could not parse response into InitialTask: {\n  \"tasks\": [\n    {\n      \"content\": \"This sub-task involves identifying and formally defining each distinct agent type required for the multi-agent trading system (e.g., Market Data Agent, Strategy Agent, Order Execution Agent, Portfolio Management Agent, Risk Management Agent). For each agent, its primary role, key responsibilities, and high-level functions will be outlined. This step establishes the conceptual boundaries and purpose of each component, forming the foundational understanding for subsequent design phases.\",\n      \"title\": \"Define Agent Types & Core Responsibilities\"\n     Cohere\n    },\n    {\n      \"content\": \"Building upon the defined agent types, this sub-task focuses on specifying the concrete interfaces for each agent, detailing the types of messages they send and receive, and the data structures involved. It includes designing the interaction patterns between agents (e.g., request-response, publish-subscribe) to ensure efficient and reliable communication of market data, trade signals, order status, portfolio updates, and risk alerts. This defines the 'API' contract between system components, crucial for interoperability and testability.\",\n      \"title\": \"Design Agent Interfaces & Interaction Patterns\"\n    },\n    {\n      \"content\": \"This sub-task specifically addresses the internal design of the 'Strategy Agent(s)' to support modular, testable, and dynamically configurable trading strategies. It involves defining how individual trading strategies will be structured, implemented (e.g., as pluggable modules or classes), and how they can be dynamically loaded, updated, or enabled/disabled at runtime without requiring a full system restart. Considerations include strategy parameterization, backtesting integration points, and the mechanism for strategies to receive market data and issue trade signals.\",\n      \"title\": \"Architect Strategy Management in Strategy Agent\"\n    }\n  ],\n  \"strategy\": \"The primary task, 'Design Agent Modularity & Strategy Encapsulation', encompasses two main areas: the overall agent architecture (types, roles, interfaces) and the specific design of strategy management within the Strategy Agent. To effectively address this, the strategy is to first define the individual agents and their core functions. This establishes the 'what'. Next, detail how these agents will interact via their interfaces, defining the 'how' of inter-agent communication. Finally, focus on the internal mechanisms for managing trading strategies independently within the Strategy Agent, addressing the 'how' of strategy logic. This sequential breakdown ensures that the foundational structure is established before delving into the specifics of inter-agent communication contracts and then the specialized logic for strategy handling, supporting modular development and clear separation of concerns without overlapping with existing high-level infrastructure tasks.\"\n}",
+        "traceback": "Traceback (most recent call last):\n  File \"/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/multi_agent_llm/gemini_llm.py\", line 110, in _extract_schema_response\n    return schema(**minimal_response)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/.venv/lib/python3.12/site-packages/pydantic/main.py\", line 212, in __init__\n    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npydantic_core._pydantic_core.ValidationError: 1 validation error for InitialTask\ntasks\n  Input should be a valid list [type=list_type, input_value='{\\n  \"tasks\": [\\n    {\\n...frastructure tasks.\"\\n}', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.9/v/list_type\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/multi_agent_llm/gemini_llm.py\", line 86, in generate_async\n    return self._extract_schema_response(result, schema)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/multi_agent_llm/gemini_llm.py\", line 112, in _extract_schema_response\n    raise ValueError(f\"Could not parse response into {schema.__name__}: {text}\")\nValueError: Could not parse response into InitialTask: {\n  \"tasks\": [\n    {\n      \"content\": \"This sub-task involves identifying and formally defining each distinct agent type required for the multi-agent trading system (e.g., Market Data Agent, Strategy Agent, Order Execution Agent, Portfolio Management Agent, Risk Management Agent). For each agent, its primary role, key responsibilities, and high-level functions will be outlined. This step establishes the conceptual boundaries and purpose of each component, forming the foundational understanding for subsequent design phases.\",\n      \"title\": \"Define Agent Types & Core Responsibilities\"\n     Cohere\n    },\n    {\n      \"content\": \"Building upon the defined agent types, this sub-task focuses on specifying the concrete interfaces for each agent, detailing the types of messages they send and receive, and the data structures involved. It includes designing the interaction patterns between agents (e.g., request-response, publish-subscribe) to ensure efficient and reliable communication of market data, trade signals, order status, portfolio updates, and risk alerts. This defines the 'API' contract between system components, crucial for interoperability and testability.\",\n      \"title\": \"Design Agent Interfaces & Interaction Patterns\"\n    },\n    {\n      \"content\": \"This sub-task specifically addresses the internal design of the 'Strategy Agent(s)' to support modular, testable, and dynamically configurable trading strategies. It involves defining how individual trading strategies will be structured, implemented (e.g., as pluggable modules or classes), and how they can be dynamically loaded, updated, or enabled/disabled at runtime without requiring a full system restart. Considerations include strategy parameterization, backtesting integration points, and the mechanism for strategies to receive market data and issue trade signals.\",\n      \"title\": \"Architect Strategy Management in Strategy Agent\"\n    }\n  ],\n  \"strategy\": \"The primary task, 'Design Agent Modularity & Strategy Encapsulation', encompasses two main areas: the overall agent architecture (types, roles, interfaces) and the specific design of strategy management within the Strategy Agent. To effectively address this, the strategy is to first define the individual agents and their core functions. This establishes the 'what'. Next, detail how these agents will interact via their interfaces, defining the 'how' of inter-agent communication. Finally, focus on the internal mechanisms for managing trading strategies independently within the Strategy Agent, addressing the 'how' of strategy logic. This sequential breakdown ensures that the foundational structure is established before delving into the specifics of inter-agent communication contracts and then the specialized logic for strategy handling, supporting modular development and clear separation of concerns without overlapping with existing high-level infrastructure tasks.\"\n}\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/agot_interactive_tool.py\", line 915, in _run_agot_agent\n    result = await agot.run_async(full_query)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/multi_agent_llm/agents/adaptive_graph_of_thoughts/AGoT.py\", line 493, in run_async\n    await asyncio.gather(*tasks)\n  File \"/opt/anaconda3/lib/python3.12/asyncio/tasks.py\", line 385, in __wakeup\n    future.result()\n  File \"/opt/anaconda3/lib/python3.12/asyncio/tasks.py\", line 314, in __step_run_and_handle_result\n    result = coro.send(None)\n             ^^^^^^^^^^^^^^^\n  File \"/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/multi_agent_llm/agents/adaptive_graph_of_thoughts/AGoT.py\", line 707, in process_task\n    subgraph_answer, subgraph = await self.process_subgraph(\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/multi_agent_llm/agents/adaptive_graph_of_thoughts/AGoT.py\", line 778, in process_subgraph\n    initial_tasks, strategy = await self._generate_initial_sub_tasks(task, question, dag=main_dag)\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/multi_agent_llm/agents/adaptive_graph_of_thoughts/AGoT.py\", line 653, in _generate_initial_sub_tasks\n    response = await self._generate(\n               ^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/multi_agent_llm/agents/adaptive_graph_of_thoughts/AGoT.py\", line 1251, in _generate\n    response = await self.llm.generate_async(messages, schema=schema)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/multi_agent_llm/gemini_llm.py\", line 90, in generate_async\n    raise Exception(f\"Gemini API error: {str(e)}\")\nException: Gemini API error: Could not parse response into InitialTask: {\n  \"tasks\": [\n    {\n      \"content\": \"This sub-task involves identifying and formally defining each distinct agent type required for the multi-agent trading system (e.g., Market Data Agent, Strategy Agent, Order Execution Agent, Portfolio Management Agent, Risk Management Agent). For each agent, its primary role, key responsibilities, and high-level functions will be outlined. This step establishes the conceptual boundaries and purpose of each component, forming the foundational understanding for subsequent design phases.\",\n      \"title\": \"Define Agent Types & Core Responsibilities\"\n     Cohere\n    },\n    {\n      \"content\": \"Building upon the defined agent types, this sub-task focuses on specifying the concrete interfaces for each agent, detailing the types of messages they send and receive, and the data structures involved. It includes designing the interaction patterns between agents (e.g., request-response, publish-subscribe) to ensure efficient and reliable communication of market data, trade signals, order status, portfolio updates, and risk alerts. This defines the 'API' contract between system components, crucial for interoperability and testability.\",\n      \"title\": \"Design Agent Interfaces & Interaction Patterns\"\n    },\n    {\n      \"content\": \"This sub-task specifically addresses the internal design of the 'Strategy Agent(s)' to support modular, testable, and dynamically configurable trading strategies. It involves defining how individual trading strategies will be structured, implemented (e.g., as pluggable modules or classes), and how they can be dynamically loaded, updated, or enabled/disabled at runtime without requiring a full system restart. Considerations include strategy parameterization, backtesting integration points, and the mechanism for strategies to receive market data and issue trade signals.\",\n      \"title\": \"Architect Strategy Management in Strategy Agent\"\n    }\n  ],\n  \"strategy\": \"The primary task, 'Design Agent Modularity & Strategy Encapsulation', encompasses two main areas: the overall agent architecture (types, roles, interfaces) and the specific design of strategy management within the Strategy Agent. To effectively address this, the strategy is to first define the individual agents and their core functions. This establishes the 'what'. Next, detail how these agents will interact via their interfaces, defining the 'how' of inter-agent communication. Finally, focus on the internal mechanisms for managing trading strategies independently within the Strategy Agent, addressing the 'how' of strategy logic. This sequential breakdown ensures that the foundational structure is established before delving into the specifics of inter-agent communication contracts and then the specialized logic for strategy handling, supporting modular development and clear separation of concerns without overlapping with existing high-level infrastructure tasks.\"\n}\n",
+        "context": {}
+      },
+      "error": "Gemini API error: Could not parse response into InitialTask: {\n  \"tasks\": [\n    {\n      \"content\": \"This sub-task involves identifying and formally defining each distinct agent type required for the multi-agent trading system (e.g., Market Data Agent, Strategy Agent, Order Execution Agent, Portfolio Management Agent, Risk Management Agent). For each agent, its primary role, key responsibilities, and high-level functions will be outlined. This step establishes the conceptual boundaries and purpose of each component, forming the foundational understanding for subsequent design phases.\",\n      \"title\": \"Define Agent Types & Core Responsibilities\"\n     Cohere\n    },\n    {\n      \"content\": \"Building upon the defined agent types, this sub-task focuses on specifying the concrete interfaces for each agent, detailing the types of messages they send and receive, and the data structures involved. It includes designing the interaction patterns between agents (e.g., request-response, publish-subscribe) to ensure efficient and reliable communication of market data, trade signals, order status, portfolio updates, and risk alerts. This defines the 'API' contract between system components, crucial for interoperability and testability.\",\n      \"title\": \"Design Agent Interfaces & Interaction Patterns\"\n    },\n    {\n      \"content\": \"This sub-task specifically addresses the internal design of the 'Strategy Agent(s)' to support modular, testable, and dynamically configurable trading strategies. It involves defining how individual trading strategies will be structured, implemented (e.g., as pluggable modules or classes), and how they can be dynamically loaded, updated, or enabled/disabled at runtime without requiring a full system restart. Considerations include strategy parameterization, backtesting integration points, and the mechanism for strategies to receive market data and issue trade signals.\",\n      \"title\": \"Architect Strategy Management in Strategy Agent\"\n    }\n  ],\n  \"strategy\": \"The primary task, 'Design Agent Modularity & Strategy Encapsulation', encompasses two main areas: the overall agent architecture (types, roles, interfaces) and the specific design of strategy management within the Strategy Agent. To effectively address this, the strategy is to first define the individual agents and their core functions. This establishes the 'what'. Next, detail how these agents will interact via their interfaces, defining the 'how' of inter-agent communication. Finally, focus on the internal mechanisms for managing trading strategies independently within the Strategy Agent, addressing the 'how' of strategy logic. This sequential breakdown ensures that the foundational structure is established before delving into the specifics of inter-agent communication contracts and then the specialized logic for strategy handling, supporting modular development and clear separation of concerns without overlapping with existing high-level infrastructure tasks.\"\n}"
+    },
+    {
+      "timestamp": "2025-08-06T11:33:02.172852",
+      "session_id": "MODERN_AGOT_INTERACTIVE_1754505155",
+      "agent_type": "MODERN_AGOT_INTERACTIVE",
+      "operation": "AGOT_EXECUTION_END",
+      "status": "ERROR",
+      "duration": 26.641693115234375,
+      "details": {},
+      "error": "Gemini API error: Could not parse response into InitialTask: {\n  \"tasks\": [\n    {\n      \"content\": \"This sub-task involves identifying and formally defining each distinct agent type required for the multi-agent trading system (e.g., Market Data Agent, Strategy Agent, Order Execution Agent, Portfolio Management Agent, Risk Management Agent). For each agent, its primary role, key responsibilities, and high-level functions will be outlined. This step establishes the conceptual boundaries and purpose of each component, forming the foundational understanding for subsequent design phases.\",\n      \"title\": \"Define Agent Types & Core Responsibilities\"\n     Cohere\n    },\n    {\n      \"content\": \"Building upon the defined agent types, this sub-task focuses on specifying the concrete interfaces for each agent, detailing the types of messages they send and receive, and the data structures involved. It includes designing the interaction patterns between agents (e.g., request-response, publish-subscribe) to ensure efficient and reliable communication of market data, trade signals, order status, portfolio updates, and risk alerts. This defines the 'API' contract between system components, crucial for interoperability and testability.\",\n      \"title\": \"Design Agent Interfaces & Interaction Patterns\"\n    },\n    {\n      \"content\": \"This sub-task specifically addresses the internal design of the 'Strategy Agent(s)' to support modular, testable, and dynamically configurable trading strategies. It involves defining how individual trading strategies will be structured, implemented (e.g., as pluggable modules or classes), and how they can be dynamically loaded, updated, or enabled/disabled at runtime without requiring a full system restart. Considerations include strategy parameterization, backtesting integration points, and the mechanism for strategies to receive market data and issue trade signals.\",\n      \"title\": \"Architect Strategy Management in Strategy Agent\"\n    }\n  ],\n  \"strategy\": \"The primary task, 'Design Agent Modularity & Strategy Encapsulation', encompasses two main areas: the overall agent architecture (types, roles, interfaces) and the specific design of strategy management within the Strategy Agent. To effectively address this, the strategy is to first define the individual agents and their core functions. This establishes the 'what'. Next, detail how these agents will interact via their interfaces, defining the 'how' of inter-agent communication. Finally, focus on the internal mechanisms for managing trading strategies independently within the Strategy Agent, addressing the 'how' of strategy logic. This sequential breakdown ensures that the foundational structure is established before delving into the specifics of inter-agent communication contracts and then the specialized logic for strategy handling, supporting modular development and clear separation of concerns without overlapping with existing high-level infrastructure tasks.\"\n}"
+    }
+  ]
+}

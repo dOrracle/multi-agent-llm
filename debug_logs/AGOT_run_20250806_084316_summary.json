@@ -1,0 +1,58 @@
+{
+  "summary": {
+    "session_info": {
+      "session_id": "AGOT_1754494996",
+      "agent_type": "AGOT",
+      "total_duration": 385.112517118454,
+      "start_time": "2025-08-06T08:43:16.178943",
+      "end_time": "2025-08-06T08:49:41.291467"
+    },
+    "operation_summary": {
+      "total_operations": 2,
+      "operation_counts": {
+        "LOGGER": 1,
+        "ENVIRONMENT": 1
+      },
+      "error_count": 0,
+      "success_rate": "100.0%",
+      "total_api_calls": 0
+    },
+    "performance_metrics": {
+      "average_operation_time": 0.0,
+      "longest_operation": "LogEntry(timestamp='2025-08-06T08:43:16.179023', session_id='AGOT_1754494996', agent_type='AGOT', operation='LOGGER_INIT', status='SUCCESS', duration=0, details={'agent_type': 'AGOT', 'session_id': 'AGOT_1754494996', 'log_file': '/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/debug_logs/AGOT_run_20250806_084316.json'}, error=None)",
+      "total_execution_time": 385.112517118454
+    }
+  },
+  "logs": [
+    {
+      "timestamp": "2025-08-06T08:43:16.179023",
+      "session_id": "AGOT_1754494996",
+      "agent_type": "AGOT",
+      "operation": "LOGGER_INIT",
+      "status": "SUCCESS",
+      "duration": 0,
+      "details": {
+        "agent_type": "AGOT",
+        "session_id": "AGOT_1754494996",
+        "log_file": "/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/debug_logs/AGOT_run_20250806_084316.json"
+      },
+      "error": null
+    },
+    {
+      "timestamp": "2025-08-06T08:43:16.179363",
+      "session_id": "AGOT_1754494996",
+      "agent_type": "AGOT",
+      "operation": "ENVIRONMENT_CHECK",
+      "status": "SUCCESS",
+      "duration": 0,
+      "details": {
+        "python_version": "3.12.2 | packaged by conda-forge | (main, Feb 16 2024, 21:00:12) [Clang 16.0.6 ]",
+        "working_directory": "/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm",
+        "has_gemini_key": true,
+        "has_tavily_key": true,
+        "env_vars_loaded": true
+      },
+      "error": null
+    }
+  ]
+}

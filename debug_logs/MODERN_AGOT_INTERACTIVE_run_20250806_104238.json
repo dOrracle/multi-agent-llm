@@ -1,0 +1,142 @@
+{
+  "timestamp": "2025-08-06T10:42:38.064399",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754502158",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "LOGGER_INIT",
+  "status": "SUCCESS",
+  "duration": 0,
+  "details": {
+    "agent_type": "MODERN_AGOT_INTERACTIVE",
+    "session_id": "MODERN_AGOT_INTERACTIVE_1754502158",
+    "log_file": "/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/debug_logs/MODERN_AGOT_INTERACTIVE_run_20250806_104238.json"
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T10:42:38.064824",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754502158",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "ENVIRONMENT_CHECK",
+  "status": "SUCCESS",
+  "duration": 0,
+  "details": {
+    "python_version": "3.12.2 | packaged by conda-forge | (main, Feb 16 2024, 21:00:12) [Clang 16.0.6 ]",
+    "working_directory": "/Users/kre8orr/local_projects/MCP/Multi_Thought",
+    "has_gemini_key": true,
+    "has_tavily_key": true,
+    "env_vars_loaded": true
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T10:42:38.065158",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754502158",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "MODERN_EXECUTION_START",
+  "status": "SUCCESS",
+  "duration": 0,
+  "details": {
+    "session_id": "modern_preview_1754501945",
+    "enhancement_decision": "enhanced",
+    "enhancement_used": false,
+    "final_query_length": 17,
+    "execution_strategy": "standard_analysis"
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T10:42:38.065349",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754502158",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "LLM_INITIALIZATION_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "model": "gemini-2.5-flash"
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T10:42:38.119940",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754502158",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "LLM_INITIALIZATION_END",
+  "status": "SUCCESS",
+  "duration": 0.05458474159240723,
+  "details": {},
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T10:42:38.120312",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754502158",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "AGOT_INITIALIZATION_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "max_concurrent_tasks": 10,
+    "max_depth": 1,
+    "max_new_tasks": 3,
+    "max_num_layers": 3
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T10:42:38.120566",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754502158",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "AGOT_INITIALIZATION_END",
+  "status": "SUCCESS",
+  "duration": 0.0002601146697998047,
+  "details": {},
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T10:42:38.120720",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754502158",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "AGOT_EXECUTION_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "query_length": 17,
+    "has_web_context": false
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T10:44:46.009873",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754502158",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "AGENT_EXECUTION",
+  "status": "SUCCESS",
+  "duration": 127.88680696487427,
+  "details": {
+    "agent_config": {
+      "type": "AGoT",
+      "max_concurrent_tasks": 10,
+      "max_depth": 1,
+      "max_new_tasks": 3,
+      "max_num_layers": 3
+    },
+    "input_query": "No query provided",
+    "execution_duration": 127.88680696487427,
+    "result_length": 25539,
+    "result_type": "FinalAnswer",
+    "result_preview": "final_answer=EvaluateTask(content=\"The query acquisition process has concluded that a valid problem query has not been successfully obtained. Despite initial requests and the establishment of input ex..."
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T10:44:46.010775",
+  "session_id": "MODERN_AGOT_INTERACTIVE_1754502158",
+  "agent_type": "MODERN_AGOT_INTERACTIVE",
+  "operation": "AGOT_EXECUTION_END",
+  "status": "SUCCESS",
+  "duration": 127.8900408744812,
+  "details": {
+    "execution_time": 127.88680410385132,
+    "result_length": 25539
+  },
+  "error": null
+}

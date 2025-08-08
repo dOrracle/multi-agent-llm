@@ -1,0 +1,348 @@
+{
+  "timestamp": "2025-08-06T08:36:30.931862",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "LOGGER_INIT",
+  "status": "SUCCESS",
+  "duration": 0,
+  "details": {
+    "agent_type": "TEST_AGENT",
+    "session_id": "TEST_AGENT_1754494590",
+    "log_file": "/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/debug_logs/TEST_AGENT_run_20250806_083630.json"
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:30.932817",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "ENVIRONMENT_CHECK",
+  "status": "SUCCESS",
+  "duration": 0,
+  "details": {
+    "python_version": "3.12.2 | packaged by conda-forge | (main, Feb 16 2024, 21:00:12) [Clang 16.0.6 ]",
+    "working_directory": "/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm",
+    "has_gemini_key": true,
+    "has_tavily_key": true,
+    "env_vars_loaded": true
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:30.933315",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "USER_INPUT",
+  "status": "SUCCESS",
+  "duration": 0,
+  "details": {
+    "query": "What is the future of artificial intelligence?",
+    "query_length": 46
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:30.933746",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "QUERY_ENHANCEMENT_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "original_query": "What is the future of artificial intelligence?",
+    "enhancement_method": "smart_hybrid"
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:31.134687",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "QUERY_ENHANCEMENT_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "original_query": "What is the future of artificial intelligence?",
+    "method_selected": "advanced",
+    "complexity_score": 4
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:31.135071",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "QUERY_ENHANCEMENT_END",
+  "status": "SUCCESS",
+  "duration": 0.00037479400634765625,
+  "details": {
+    "enhanced_query": "Provide a comprehensive analysis of artificial intelligence's future trajectory, including key developments, challenges, and potential impacts across various sectors.",
+    "query_length_change": "46 \u2192 166",
+    "enhancement_ratio": "3.6x",
+    "method_used": "advanced",
+    "complexity_score": 4,
+    "enhancement_details": {
+      "improvements": [
+        "expanded_scope",
+        "added_specificity",
+        "professional_tone"
+      ],
+      "complexity_factors": [
+        "future_prediction",
+        "multi_domain"
+      ]
+    }
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:31.135303",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "WEB_SEARCH_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "search_query": "Provide a comprehensive analysis of artificial intelligence's future trajectory, including key developments, challenges, and potential impacts across various sectors.",
+    "api": "tavily"
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:31.636561",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "WEB_SEARCH",
+  "status": "SUCCESS",
+  "duration": 0.5,
+  "details": {
+    "search_query": "Provide a comprehensive analysis of artificial intelligence's future trajectory, including key developments, challenges, and potential impacts across various sectors.",
+    "results_length": 117,
+    "has_results": true,
+    "search_duration": 0.5
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:31.637099",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "WEB_SEARCH_END",
+  "status": "SUCCESS",
+  "duration": 0.5017759799957275,
+  "details": {
+    "context_retrieved": true
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:31.637463",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "GEMINI_API_CALLS_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "model": "gemini-2.5-flash",
+    "request_type": "content_generation"
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:31.938638",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "API_CALL_GEMINI",
+  "status": "SUCCESS",
+  "duration": 0.3,
+  "details": {
+    "api_name": "gemini",
+    "request_size": 73,
+    "response_size": 59,
+    "request_preview": "{'prompt': 'API call 1', 'model': 'gemini-2.5-flash', 'temperature': 0.7}",
+    "response_preview": "{'content': 'Response from API call 1', 'tokens_used': 150}",
+    "call_duration": 0.3
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:32.240152",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "API_CALL_GEMINI",
+  "status": "SUCCESS",
+  "duration": 0.3,
+  "details": {
+    "api_name": "gemini",
+    "request_size": 73,
+    "response_size": 59,
+    "request_preview": "{'prompt': 'API call 2', 'model': 'gemini-2.5-flash', 'temperature': 0.7}",
+    "response_preview": "{'content': 'Response from API call 2', 'tokens_used': 170}",
+    "call_duration": 0.3
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:32.541061",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "API_CALL_GEMINI",
+  "status": "SUCCESS",
+  "duration": 0.3,
+  "details": {
+    "api_name": "gemini",
+    "request_size": 73,
+    "response_size": 59,
+    "request_preview": "{'prompt': 'API call 3', 'model': 'gemini-2.5-flash', 'temperature': 0.7}",
+    "response_preview": "{'content': 'Response from API call 3', 'tokens_used': 190}",
+    "call_duration": 0.3
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:32.541480",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "GEMINI_API_CALLS_END",
+  "status": "SUCCESS",
+  "duration": 0.904019832611084,
+  "details": {
+    "total_api_calls": 3,
+    "total_tokens_estimated": 510
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:32.541759",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "AGENT_EXECUTION_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "agent_type": "TEST_AGENT",
+    "max_iterations": 3
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:33.544168",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "AGENT_EXECUTION",
+  "status": "SUCCESS",
+  "duration": 1.0010638236999512,
+  "details": {
+    "agent_config": {
+      "type": "TEST_AGENT",
+      "max_iterations": 3,
+      "temperature": 0.7
+    },
+    "input_query": "Provide a comprehensive analysis of artificial intelligence's future trajectory, including key developments, challenges, and potential impacts across various sectors.",
+    "execution_duration": 1.0010638236999512,
+    "result_length": 180,
+    "result_type": "str",
+    "result_preview": "Artificial intelligence is poised for significant growth with advances in machine learning, natural language processing, and automation technologies reshaping industries worldwide."
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:33.544517",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "AGENT_EXECUTION_END",
+  "status": "SUCCESS",
+  "duration": 1.002748966217041,
+  "details": {
+    "execution_completed": true,
+    "result_length": 180
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:33.544868",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "OUTPUT_ENHANCEMENT_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "raw_output_length": 180
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:33.745713",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "OUTPUT_ENHANCEMENT_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "raw_output_length": 180,
+    "enhancement_method": "structured_formatting"
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:33.746644",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "OUTPUT_ENHANCEMENT_END",
+  "status": "SUCCESS",
+  "duration": 0.0007960796356201172,
+  "details": {
+    "enhanced_output_length": 615,
+    "enhancement_ratio": "3.4x",
+    "improvements_applied": [
+      "markdown_structure",
+      "executive_summary",
+      "key_points",
+      "conclusion"
+    ],
+    "enhancement_method": "structured_formatting",
+    "raw_preview": "Artificial intelligence is poised for significant growth with advances in machine learning, natural ...",
+    "enhanced_preview": "\n# The Future of Artificial Intelligence\n\n## Executive Summary\nArtificial intelligence is poised for..."
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:33.747138",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "ERROR_SIMULATION_START",
+  "status": "IN_PROGRESS",
+  "duration": 0,
+  "details": {
+    "purpose": "demonstrate_error_logging"
+  },
+  "error": null
+}
+{
+  "timestamp": "2025-08-06T08:36:33.748555",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "ERROR_SIMULATION_ERROR",
+  "status": "ERROR",
+  "duration": 0,
+  "details": {
+    "error_type": "ValueError",
+    "error_message": "This is a simulated error to show error logging capabilities",
+    "traceback": "Traceback (most recent call last):\n  File \"/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm/test_run_debug_logger.py\", line 172, in simulate_agent_run\n    raise ValueError(\"This is a simulated error to show error logging capabilities\")\nValueError: This is a simulated error to show error logging capabilities\n",
+    "context": {
+      "error_type": "simulated",
+      "purpose": "testing"
+    }
+  },
+  "error": "This is a simulated error to show error logging capabilities"
+}
+{
+  "timestamp": "2025-08-06T08:36:33.749244",
+  "session_id": "TEST_AGENT_1754494590",
+  "agent_type": "TEST_AGENT",
+  "operation": "ERROR_SIMULATION_END",
+  "status": "ERROR",
+  "duration": 0.002006053924560547,
+  "details": {},
+  "error": "This is a simulated error to show error logging capabilities"
+}
