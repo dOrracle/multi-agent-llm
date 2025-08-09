@@ -24,7 +24,7 @@ from multi_agent_llm.agents.adaptive_graph_of_thoughts.templates import (
     SYSTEM_PROMPT, TASK_EXECUTION_SYS_PROMPT, TASK_EXECUTION_USER_PROMPT,
     USER_PROMPT_INITIAL_SUB_TASK, USER_PROMPT_INITIAL_TASK,
     USER_PROMPT_NEW_TASK)
-from multi_agent_llm.llm import LLMBase
+from ...llm import LLMBase
 
 # Import web search utilities
 try:
@@ -621,19 +621,39 @@ class AGOT:
             Tasks (List[Task]): List of initial tasks to solve the question
             Strategy (str): The strategy of generating the initial tasks
         """
-        response = await self._generate(
-            category=PromptCategory.INITIAL_TASK,
-            schema=InitialTask,
-            question=question,
-            max_new_tasks=self.max_new_tasks,
-            dag=None,
-        )
-        tasks = getattr(response, "tasks", None)
-        strategy = getattr(response, "strategy", None)
-        if tasks is not None and strategy is not None:
-            return tasks, strategy
-        else:
-            raise TypeError("Response missing tasks or strategy in _generate_initial_tasks")
+        try:
+            response = await self._generate(
+                category=PromptCategory.INITIAL_TASK,
+                schema=InitialTask,
+                question=question,
+                max_new_tasks=self.max_new_tasks,
+                dag=None,
+            )
+            tasks = getattr(response, "tasks", None)
+            strategy = getattr(response, "strategy", None)
+            if tasks is not None and strategy is not None:
+                return tasks, strategy
+            else:
+                raise TypeError("Response missing tasks or strategy in _generate_initial_tasks")
+        except Exception as e:
+            self._log(
+                level=1,
+                message=f"Error generating initial tasks: {e}",
+                response=str(response) if 'response' in locals() else 'No response object'
+            )
+            # Attempt to re-parse with a more flexible schema or return a default
+            if 'response' in locals() and isinstance(response, str):
+                try:
+                    import json
+                    data = json.loads(response)
+                    tasks = [Task(**task_data) for task_data in data.get('tasks', [])]
+                    strategy = data.get('strategy', 'Default strategy due to parsing error.')
+                    if tasks:
+                        return tasks, strategy
+                except json.JSONDecodeError:
+                    pass  # Fall through to raise the original error
+
+            raise TypeError(f"Failed to generate initial tasks after retry: {e}")
 
     async def _generate_initial_sub_tasks(
         self, task: Task, question: str, dag: Optional[nx.DiGraph] = None

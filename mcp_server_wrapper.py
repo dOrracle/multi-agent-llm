@@ -6,6 +6,10 @@ import sys
 import traceback
 from typing import Any, Dict
 
+from loguru import logger
+logger.remove()
+logger.add(sys.stdout, format="<green>{time}</green> <level>{level}</level> <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>", level="DEBUG")
+
 from multi_agent_llm.gemini_llm import GeminiLLM
 from multi_agent_llm.agents.adaptive_graph_of_thoughts.AGoT import AGOT
 from multi_agent_llm.agents.iteration_of_thought import AIOT, GIOT
@@ -13,11 +17,13 @@ from multi_agent_llm.agents.iteration_of_thought import AIOT, GIOT
 
 class ReasoningEngine:
     def __init__(self):
+        logger.info("Initializing ReasoningEngine")
         self.llm = GeminiLLM()
         
     async def handle_agot(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Handle Adaptive Graph of Thoughts reasoning"""
         try:
+            logger.debug(f"AGOT params: {params}")
             agot = AGOT(
                 llm=self.llm,
                 max_new_tasks=params.get('max_new_tasks', 3),
@@ -25,40 +31,40 @@ class ReasoningEngine:
                 max_num_layers=params.get('max_num_layers', 3),
                 verbose=params.get('verbose', 1)
             )
-            
             result = await agot.run_async(params['query'])
-            
+            logger.info(f"AGOT result: {result}")
             # Summarize the graph for lightweight response
             graph_summary = f"Generated {len(result.graph)} reasoning nodes"
             if result.graph:
                 depths = [node.depth for node in result.graph]
                 layers = [node.layer for node in result.graph]
                 graph_summary += f" across {max(depths)+1} depths and {max(layers)+1} layers"
-            
+            logger.debug(f"AGOT graph summary: {graph_summary}")
             return {
                 'final_answer': result.final_answer,
                 'graph_summary': graph_summary,
                 'total_nodes': len(result.graph),
                 'graph_data': [node.model_dump() for node in result.graph] if params.get('include_graph') else None
             }
-            
         except Exception as e:
+            logger.error(f"AGOT reasoning failed: {str(e)}")
             raise Exception(f"AGOT reasoning failed: {str(e)}")
 
     async def handle_iterative(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """Handle iterative reasoning (AIOT/GIOT)"""
         try:
+            logger.debug(f"Iterative params: {params}")
             method = params.get('method', 'aiot').lower()
             iterations = params.get('iterations', 5)
-            
             if method == 'aiot':
                 reasoner = AIOT(self.llm, iterations=iterations)
             elif method == 'giot':
                 reasoner = GIOT(self.llm, iterations=iterations)
             else:
+                logger.error(f"Unknown iterative method: {method}")
                 raise ValueError(f"Unknown iterative method: {method}")
-            
             result = await reasoner.run_async(params['query'])
+            logger.info(f"Iterative result: {result}")
             
             # Summarize thoughts for lightweight response
             thoughts_summary = ""
@@ -162,34 +168,35 @@ class ReasoningEngine:
 async def main():
     """Main event loop for processing requests"""
     engine = ReasoningEngine()
-    
+    logger.info("Starting main event loop for MCP server wrapper")
     # Process requests from stdin
     while True:
         try:
             line = await asyncio.to_thread(sys.stdin.readline)
             if not line:
+                logger.info("No more input. Exiting main loop.")
                 break
-                
             line = line.strip()
             if not line:
                 continue
-            
             try:
+                logger.debug(f"Received line: {line}")
                 request = json.loads(line)
+                logger.info(f"Processing request: {request}")
                 response = await engine.process_request(request)
-                
+                logger.info(f"Response: {response}")
                 # Send response to stdout
                 print(json.dumps(response), flush=True)
-                
             except json.JSONDecodeError:
+                logger.error(f"Invalid JSON request: {line}")
                 error_response = {
                     'request_id': None,
                     'result': None,
                     'error': 'Invalid JSON request'
                 }
                 print(json.dumps(error_response), flush=True)
-                
         except Exception as e:
+            logger.error(f"Processing error: {str(e)}")
             error_response = {
                 'request_id': None,
                 'result': None,
@@ -200,9 +207,12 @@ async def main():
 
 if __name__ == "__main__":
     try:
+        logger.info("Starting MCP server wrapper main entry point")
         asyncio.run(main())
     except KeyboardInterrupt:
+        logger.info("KeyboardInterrupt received. Exiting.")
         sys.exit(0)
     except Exception as e:
+        logger.critical(f"Fatal error: {e}")
         print(f"Fatal error: {e}", file=sys.stderr)
         sys.exit(1)

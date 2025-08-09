@@ -11,6 +11,8 @@ from typing import Dict, Any, Optional, Type
 from pathlib import Path
 # Import web_search_handler for Tavily integration
 from web_search_tool import web_search_handler
+# Import debug logger
+from llm_debug_logger import LLMDebugLogger, debug_logger
 
 
 # Add the mcp-server/python directory to the system path
@@ -76,6 +78,8 @@ class MultiAgentToolExecutor:
             elif pytool:
                 self.tools[pytool] = getattr(self, f"execute_{pytool.replace('_query','')}")
         self.tools['health_check'] = self.health_check
+        # Ensure debug logger is initialized
+        self.debug_logger = debug_logger
 
     async def execute_web_search(self, args: Dict[str, Any]) -> Dict[str, Any]:
         """Execute Tavily web search tool"""
@@ -109,7 +113,7 @@ class MultiAgentToolExecutor:
         }
 
     async def execute_agot(self, args: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute Adaptive Graph of Thoughts"""
+        """Execute Adaptive Graph of Thoughts with persistent debug logging"""
         try:
             if is_debug():
                 print("[DEBUG] Starting AGOT execution")
@@ -179,6 +183,26 @@ class MultiAgentToolExecutor:
             if is_debug():
                 print("[DEBUG] AGOT query executed")
 
+            # Log successful AGOT run
+            self.debug_logger.log_interaction(
+                interaction_type="AGOT_EXECUTION",
+                system_prompt="AGOT run_async",
+                user_prompt=question,
+                raw_response=str(response),
+                parsed_response=str(response.final_answer) if hasattr(response, 'final_answer') else str(response),
+                error=None,
+                metadata={
+                    "provider": provider,
+                    "model_name": model_name,
+                    "temperature": temperature,
+                    "max_depth": max_depth,
+                    "max_num_layers": max_num_layers,
+                    "max_new_tasks": max_new_tasks,
+                    "max_concurrent_tasks": max_concurrent_tasks
+                }
+            )
+            self.debug_logger.save_to_file()
+
             return {
                 "success": True,
                 "method": "AGOT",
@@ -202,6 +226,21 @@ class MultiAgentToolExecutor:
         except Exception as e:
             import traceback
             print(f"[ERROR] Error in AGOT execution: {e}")
+            # Log error
+            self.debug_logger.log_interaction(
+                interaction_type="AGOT_EXECUTION_ERROR",
+                system_prompt="AGOT run_async",
+                user_prompt=args.get('question', 'NA'),
+                raw_response=None,
+                parsed_response=None,
+                error=str(e),
+                metadata={
+                    "traceback": traceback.format_exc(),
+                    "provider": args.get('llm_provider', 'NA'),
+                    "model_name": args.get('model_name', 'NA')
+                }
+            )
+            self.debug_logger.save_to_file()
             return {
                 "success": False,
                 "method": "AGOT",
