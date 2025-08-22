@@ -11,7 +11,8 @@ from typing import Dict, List, Optional
 from dataclasses import dataclass
 
 # Add the parent directory to the path to import the modules
-sys.path.append('/Users/kre8orr/local_projects/MCP/Multi_Thought/multi-agent-llm')
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(current_dir)
 
 # Load environment variables from the correct .env file location
 try:
@@ -42,14 +43,16 @@ class AdvancedQueryEnhancer:
     def __init__(self):
         # Use the google.genai client for consistency with other modules
         self.client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
-        self.model_name = "gemini-2.5-flash"
+        self.model_name = "gemini-2.5-pro"
 
-    async def enhance_query(self, raw_query: str) -> EnhancedQuery:
+    async def enhance_query(self, raw_query: str, length: str = "medium", detail: str = "medium") -> EnhancedQuery:
         """Transform a basic query into a research-grade investigation"""
         
         enhancement_prompt = f"""Transform this basic query into a comprehensive research investigation.
 
 Original Query: "{raw_query}"
+Desired Length: "{length}"
+Desired Detail: "{detail}"
 
 Analyze and enhance using these modern research methodologies:
 
@@ -82,49 +85,31 @@ Return a JSON response with this exact structure:
   "confidence_score": 0.85
 }}
 
-Make the enhanced query specific, actionable, and designed for deep research. Include temporal context (August 2025), specify domains, and frame for comprehensive investigation."""
+Make the enhanced query specific, actionable, and designed for deep research. Specify domains and frame for comprehensive investigation."""
 
-        try:
-            response = await asyncio.to_thread(
-                self.client.models.generate_content,
-                model=self.model_name,
-                contents=enhancement_prompt
-            )
-            
-            # Clean and parse JSON
-            text = response.text.strip() if response.text else ""
-            if text.startswith('```json'):
-                text = text[7:-3]
-            elif text.startswith('```'):
-                text = text[3:-3]
-            
-            data = json.loads(text)
-            
-            return EnhancedQuery(
-                original=raw_query,
-                enhanced=data["enhanced_query"],
-                sub_queries=data["sub_queries"],
-                context_dimensions=data["context_dimensions"], 
-                research_angles=data["research_angles"],
-                confidence_score=data["confidence_score"]
-            )
-            
-        except Exception as e:
-            print(f"⚠️  Query enhancement error: {e}")
-            # Fallback enhancement
-            return EnhancedQuery(
-                original=raw_query,
-                enhanced=f"Comprehensive analysis of {raw_query} including current trends, implications, and practical applications in August 2025",
-                sub_queries=[
-                    raw_query,
-                    f"What are the current trends related to {raw_query}?",
-                    f"What are the implications of {raw_query}?",
-                    f"What are practical applications of {raw_query}?"
-                ],
-                context_dimensions=["Current market conditions", "Regulatory environment", "Technological trends"],
-                research_angles=["Technical analysis", "Market impact", "Future outlook", "Practical implementation"],
-                confidence_score=0.5
-            )
+        response = await asyncio.to_thread(
+            self.client.models.generate_content,
+            model=self.model_name,
+            contents=enhancement_prompt
+        )
+        
+        # Clean and parse JSON
+        text = response.text.strip() if response.text else ""
+        if text.startswith('```json'):
+            text = text[7:-3]
+        elif text.startswith('```'):
+            text = text[3:-3]
+        
+        data = json.loads(text)
+        
+        return EnhancedQuery(
+            original=raw_query,
+            enhanced=data["enhanced_query"],
+            sub_queries=data["sub_queries"],
+            context_dimensions=data["context_dimensions"], 
+            research_angles=data["research_angles"],
+            confidence_score=data["confidence_score"]
+        )
 
     async def enhance_simple(self, raw_query: str, domain: str = "general") -> Dict:
         """Simple enhancement that returns a dictionary (backward compatibility)"""
@@ -158,40 +143,130 @@ Return JSON format:
 
 Make the enhanced query significantly more likely to produce valuable, comprehensive results."""
 
-        try:
-            response = await asyncio.to_thread(
-                self.client.models.generate_content,
-                model=self.model_name,
-                contents=enhancement_prompt
-            )
-            
-            text = response.text.strip() if response.text else ""
-            if text.startswith('```json'):
-                text = text[7:-3]
-            elif text.startswith('```'):
-                text = text[3:-3]
-            
-            try:
-                data = json.loads(text)
-                return {
-                    "enhanced_query": data.get("enhanced_query", raw_query),
-                    "improvements_made": data.get("improvements_made", []),
-                    "focus_areas": data.get("focus_areas", [])
-                }
-            except json.JSONDecodeError:
-                return {
-                    "enhanced_query": f"Comprehensive analysis of {raw_query}, including current context, implications, and practical applications",
-                    "improvements_made": ["Added comprehensiveness", "Improved clarity"],
-                    "focus_areas": ["Primary analysis", "Current context", "Practical implications"]
-                }
-                
-        except Exception as e:
-            print(f"⚠️  Query enhancement error: {e}")
-            return {
-                "enhanced_query": raw_query,
-                "improvements_made": ["No enhancement applied"],
-                "focus_areas": ["Basic inquiry"]
-            }
+        response = await asyncio.to_thread(
+            self.client.models.generate_content,
+            model=self.model_name,
+            contents=enhancement_prompt
+        )
+        
+        text = response.text.strip() if response.text else ""
+        if text.startswith('```json'):
+            text = text[7:-3]
+        elif text.startswith('```'):
+            text = text[3:-3]
+        
+        data = json.loads(text)
+        return {
+            "enhanced_query": data.get("enhanced_query", raw_query),
+            "improvements_made": data.get("improvements_made", []),
+            "focus_areas": data.get("focus_areas", [])
+        }
+
+    async def enhance_creative(self, raw_query: str) -> Dict:
+        """Creative enhancement that returns a dictionary"""
+        
+        enhancement_prompt = f"""Transform this basic user query into a creative and imaginative prompt.
+
+Original Query: "{raw_query}"
+
+Apply these enhancement techniques:
+1.  **Metaphorical Expansion:** Reframe the query using a metaphor or analogy.
+2.  **Unexpected Connections:** Connect the query to a seemingly unrelated topic.
+3.  **Role-Playing:** Frame the query as a request from a fictional character or persona.
+4.  **Sensory Details:** Add sensory details to the prompt to make it more vivid and engaging.
+5.  **"What If" Scenarios:** Pose a "what if" scenario related to the query.
+
+Return JSON format:
+{{
+  "enhanced_query": "A creative and imaginative version of the original query",
+  "creative_elements": [
+    "Metaphor or analogy used",
+    "Unexpected connection made",
+    "Role-playing persona",
+    "Sensory details added",
+    "What if scenario posed"
+  ]
+}}
+
+Make the enhanced query significantly more likely to produce creative and imaginative results."""
+
+        response = await asyncio.to_thread(
+            self.client.models.generate_content,
+            model=self.model_name,
+            contents=enhancement_prompt
+        )
+        
+        text = response.text.strip() if response.text else ""
+        if text.startswith('```json'):
+            text = text[7:-3]
+        elif text.startswith('```'):
+            text = text[3:-3]
+        
+        data = json.loads(text)
+        return {
+            "enhanced_query": data.get("enhanced_query", raw_query),
+            "creative_elements": data.get("creative_elements", [])
+        }
+
+    async def enhance_research(self, raw_query: str) -> Dict:
+        """Research enhancement that returns a dictionary"""
+        
+        enhancement_prompt = f"""Transform this basic user query into a comprehensive research plan.
+
+Original Query: "{raw_query}"
+
+Apply these enhancement techniques:
+1.  **Research Questions:** Formulate a set of specific research questions.
+2.  **Methodology:** Propose a research methodology for answering the research questions.
+3.  **Data Sources:** Identify potential data sources for the research.
+4.  **Keywords:** Generate a list of keywords for searching for relevant information.
+5.  **Outline:** Create an outline for a research paper or report.
+
+Return JSON format:
+{{
+  "enhanced_query": "A comprehensive research plan based on the original query",
+  "research_questions": [
+    "Specific research question 1",
+    "Specific research question 2",
+    "Specific research question 3"
+  ],
+  "methodology": "Proposed research methodology",
+  "data_sources": [
+    "Potential data source 1",
+    "Potential data source 2",
+    "Potential data source 3"
+  ],
+  "keywords": [
+    "Keyword 1",
+    "Keyword 2",
+    "Keyword 3"
+  ],
+  "outline": "Outline for a research paper or report"
+}}
+
+Make the enhanced query a comprehensive and actionable research plan."""
+
+        response = await asyncio.to_thread(
+            self.client.models.generate_content,
+            model=self.model_name,
+            contents=enhancement_prompt
+        )
+        
+        text = response.text.strip() if response.text else ""
+        if text.startswith('```json'):
+            text = text[7:-3]
+        elif text.startswith('```'):
+            text = text[3:-3]
+        
+        data = json.loads(text)
+        return {
+            "enhanced_query": data.get("enhanced_query", raw_query),
+            "research_questions": data.get("research_questions", []),
+            "methodology": data.get("methodology", ""),
+            "data_sources": data.get("data_sources", []),
+            "keywords": data.get("keywords", []),
+            "outline": data.get("outline", "")
+        }
 
 # Global enhancer instance
 _global_enhancer = None
@@ -211,12 +286,26 @@ async def enhance_user_query(raw_query: str, domain: str = "general") -> Dict:
     enhancer = await get_query_enhancer()
     return await enhancer.enhance_simple(raw_query, domain)
 
-async def enhance_user_query_advanced(raw_query: str) -> EnhancedQuery:
+async def enhance_user_query_advanced(raw_query: str, length: str = "medium", detail: str = "medium") -> EnhancedQuery:
     """
     Advanced enhancement that returns a full EnhancedQuery object
     """
     enhancer = await get_query_enhancer()
-    return await enhancer.enhance_query(raw_query)
+    return await enhancer.enhance_query(raw_query, length, detail)
+
+async def enhance_user_query_creative(raw_query: str) -> Dict:
+    """
+    Creative enhancement that returns a dictionary
+    """
+    enhancer = await get_query_enhancer()
+    return await enhancer.enhance_creative(raw_query)
+
+async def enhance_user_query_research(raw_query: str) -> Dict:
+    """
+    Research enhancement that returns a dictionary
+    """
+    enhancer = await get_query_enhancer()
+    return await enhancer.enhance_research(raw_query)
 
 # Integration with research systems
 class PowerfulResearchSystem:
@@ -231,36 +320,6 @@ class PowerfulResearchSystem:
         
         # Step 1: Enhance the query
         enhanced = await self.enhancer.enhance_query(raw_query)
-        
-        # Step 2: Research using enhanced query and sub-queries
-        # Note: Research functionality disabled due to integration issues
-        # if self.researcher and hasattr(self.researcher, 'research'):
-        #     try:
-        #         primary_research = await self.researcher.research(enhanced.enhanced, depth=4)
-        #         
-        #         # Step 3: Research each angle for comprehensive coverage
-        #         angle_research = []
-        #         for angle in enhanced.research_angles[:2]:  # Limit to 2 angles for cost
-        #             angle_query = f"{enhanced.enhanced} - focus on: {angle}"
-        #             angle_result = await self.researcher.research(angle_query, depth=2)
-        #             angle_research.append({
-        #                 "angle": angle,
-        #                 "findings": angle_result.synthesis if hasattr(angle_result, 'synthesis') else str(angle_result)
-        #             })
-        #         
-        #         return {
-        #             "original_query": raw_query,
-        #             "enhanced_query": enhanced.enhanced,
-        #             "primary_research": primary_research.synthesis if hasattr(primary_research, 'synthesis') else str(primary_research),
-        #             "alternative_perspectives": angle_research,
-        #             "context_dimensions": enhanced.context_dimensions,
-        #             "total_sources": len(primary_research.sources) if hasattr(primary_research, 'sources') else 0,
-        #             "confidence": enhanced.confidence_score
-        #         }
-        #     except Exception as e:
-        #         print(f"⚠️  Research error: {e}")
-        #         # Fallback to query enhancement only
-        #         pass
         
         # Return enhanced query structure only (fallback)
         return {
@@ -280,88 +339,135 @@ async def smart_research(query: str) -> Dict:
     return await system.intelligent_research(query)
 
 # Intelligent hybrid enhancement system
-async def smart_enhance_query(raw_query: str, force_advanced: bool = False) -> Dict:
+async def smart_enhance_query(raw_query: str, mode: str = "auto", length: str = "medium", detail: str = "medium") -> Dict:
     """
     Intelligently choose between simple and advanced enhancement based on query complexity
     
     Args:
         raw_query: The original user query
-        force_advanced: Force advanced enhancement regardless of complexity analysis
+        mode: The enhancement mode
+        length: The desired length of the enhanced prompt
+        detail: The desired detail of the enhanced prompt
         
     Returns:
         Dict with enhanced_query, method_used, and other relevant data
     """
     
-    # Analyze query complexity
-    query_length = len(raw_query.split())
-    query_lower = raw_query.lower()
-    
-    # Complex topic indicators
-    complex_terms = [
-        'investment', 'analysis', 'comparison', 'strategy', 'research', 'evaluate',
-        'should i buy', 'what are the risks', 'pros and cons', 'analyze', 'compare',
-        'market', 'financial', 'economic', 'regulatory', 'technology', 'blockchain',
-        'cryptocurrency', 'bitcoin', 'ethereum', 'stock', 'portfolio', 'risk',
-        'long-term', 'short-term', 'future', 'prediction', 'forecast', 'trend'
-    ]
-    
-    # Decision logic indicators
-    decision_terms = ['should', 'would', 'could', 'recommend', 'advice', 'choose']
-    
-    # Multi-faceted question indicators  
-    multifaceted_terms = ['and', 'versus', 'vs', 'or', 'both', 'either', 'multiple']
-    
-    # Calculate complexity score
-    complexity_score = 0
-    
-    # Length factor (longer queries often more complex)
-    if query_length > 10: complexity_score += 2
-    if query_length > 20: complexity_score += 3
-    
-    # Complex terms
-    complexity_score += sum(1 for term in complex_terms if term in query_lower)
-    
-    # Decision-making queries (benefit from multiple perspectives)
-    complexity_score += sum(2 for term in decision_terms if term in query_lower)
-    
-    # Multi-faceted queries
-    complexity_score += sum(1 for term in multifaceted_terms if term in query_lower)
-    
-    # Question marks (often indicate complex inquiries)
-    if '?' in raw_query: complexity_score += 1
-    if raw_query.count('?') > 1: complexity_score += 2
-    
-    # Determine enhancement method
-    use_advanced = force_advanced or complexity_score >= 5
-    
-    print(f"🤖 Query Complexity Analysis:")
-    print(f"   Complexity Score: {complexity_score}")
-    print(f"   Method Selected: {'Advanced' if use_advanced else 'Simple'}")
-    
-    if use_advanced:
+    if mode == "simple":
+        print("   ⚡ Using Simple Enhancement (efficient improvement)")
+        simple_result = await enhance_user_query(raw_query)
+        return {
+            "enhanced_query": simple_result["enhanced_query"],
+            "method_used": "simple", 
+            "original_query": raw_query,
+            "improvements_made": simple_result["improvements_made"],
+            "focus_areas": simple_result["focus_areas"]
+        }
+    elif mode == "advanced":
         print("   🚀 Using Advanced Enhancement (comprehensive research analysis)")
-        advanced_result = await enhance_user_query_advanced(raw_query)
+        advanced_result = await enhance_user_query_advanced(raw_query, length, detail)
         return {
             "enhanced_query": advanced_result.enhanced,
             "method_used": "advanced",
-            "complexity_score": complexity_score,
             "original_query": raw_query,
             "sub_queries": advanced_result.sub_queries,
             "research_angles": advanced_result.research_angles,
             "context_dimensions": advanced_result.context_dimensions,
             "confidence_score": advanced_result.confidence_score
         }
-    else:
-        print("   ⚡ Using Simple Enhancement (efficient improvement)")
-        simple_result = await enhance_user_query(raw_query)
+    elif mode == "creative":
+        print("   🎨 Using Creative Enhancement")
+        creative_result = await enhance_user_query_creative(raw_query)
         return {
-            "enhanced_query": simple_result["enhanced_query"],
-            "method_used": "simple", 
-            "complexity_score": complexity_score,
+            "enhanced_query": creative_result["enhanced_query"],
+            "method_used": "creative",
             "original_query": raw_query,
-            "improvements_made": simple_result["improvements_made"],
-            "focus_areas": simple_result["focus_areas"]
+            "creative_elements": creative_result["creative_elements"]
         }
+    elif mode == "research":
+        print("   🔬 Using Research Enhancement")
+        research_result = await enhance_user_query_research(raw_query)
+        return {
+            "enhanced_query": research_result["enhanced_query"],
+            "method_used": "research",
+            "original_query": raw_query,
+            "research_questions": research_result["research_questions"],
+            "methodology": research_result["methodology"],
+            "data_sources": research_result["data_sources"],
+            "keywords": research_result["keywords"],
+            "outline": research_result["outline"]
+        }
+    else: # auto
+        # Analyze query complexity
+        query_length = len(raw_query.split())
+        query_lower = raw_query.lower()
+        
+        # Complex topic indicators
+        complex_terms = [
+            'investment', 'analysis', 'comparison', 'strategy', 'research', 'evaluate',
+            'should i buy', 'what are the risks', 'pros and cons', 'analyze', 'compare',
+            'market', 'financial', 'economic', 'regulatory', 'technology', 'blockchain',
+            'cryptocurrency', 'bitcoin', 'ethereum', 'stock', 'portfolio', 'risk',
+            'long-term', 'short-term', 'future', 'prediction', 'forecast', 'trend'
+        ]
+        
+        # Decision logic indicators
+        decision_terms = ['should', 'would', 'could', 'recommend', 'advice', 'choose']
+        
+        # Multi-faceted question indicators  
+        multifaceted_terms = ['and', 'versus', 'vs', 'or', 'both', 'either', 'multiple']
+        
+        # Calculate complexity score
+        complexity_score = 0
+        
+        # Length factor (longer queries often more complex)
+        if query_length > 10: complexity_score += 2
+        if query_length > 20: complexity_score += 3
+        
+        # Complex terms
+        complexity_score += sum(1 for term in complex_terms if term in query_lower)
+        
+        # Decision-making queries (benefit from multiple perspectives)
+        complexity_score += sum(2 for term in decision_terms if term in query_lower)
+        
+        # Multi-faceted queries
+        complexity_score += sum(1 for term in multifaceted_terms if term in query_lower)
+        
+        # Question marks (often indicate complex inquiries)
+        if '?' in raw_query: complexity_score += 1
+        if raw_query.count('?') > 1: complexity_score += 2
+        
+        # Determine enhancement method
+        use_advanced = complexity_score >= 5
+        
+        print(f"🤖 Query Complexity Analysis:")
+        print(f"   Complexity Score: {complexity_score}")
+        print(f"   Method Selected: {'Advanced' if use_advanced else 'Simple'}")
+        
+        if use_advanced:
+            print("   🚀 Using Advanced Enhancement (comprehensive research analysis)")
+            advanced_result = await enhance_user_query_advanced(raw_query)
+            return {
+                "enhanced_query": advanced_result.enhanced,
+                "method_used": "advanced",
+                "complexity_score": complexity_score,
+                "original_query": raw_query,
+                "sub_queries": advanced_result.sub_queries,
+                "research_angles": advanced_result.research_angles,
+                "context_dimensions": advanced_result.context_dimensions,
+                "confidence_score": advanced_result.confidence_score
+            }
+        else:
+            print("   ⚡ Using Simple Enhancement (efficient improvement)")
+            simple_result = await enhance_user_query(raw_query)
+            return {
+                "enhanced_query": simple_result["enhanced_query"],
+                "method_used": "simple", 
+                "complexity_score": complexity_score,
+                "original_query": raw_query,
+                "improvements_made": simple_result["improvements_made"],
+                "focus_areas": simple_result["focus_areas"]
+            }
 
 # One-liner function for easy integration
 async def enhance_query_auto(raw_query: str) -> str:

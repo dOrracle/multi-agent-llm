@@ -21,7 +21,18 @@ except ImportError:
 
 T = TypeVar("T")
 
-nest_asyncio.apply()
+# Only apply nest_asyncio if not using uvloop
+try:
+    import asyncio
+    loop = asyncio.get_event_loop()
+    if not isinstance(loop, type(loop)) or 'uvloop' not in str(type(loop)):
+        nest_asyncio.apply()
+except:
+    # Fallback: try to apply, ignore if it fails
+    try:
+        nest_asyncio.apply()
+    except ValueError:
+        pass  # uvloop incompatibility, skip nest_asyncio
 
 
 from concurrent.futures import Future, TimeoutError

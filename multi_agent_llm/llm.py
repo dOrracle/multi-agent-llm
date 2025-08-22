@@ -43,8 +43,8 @@ class OpenAILLM(LLMBase):
     def __init__(
         self,
         model_name: str,
-        api_key: str | None = None,
-        temperature: float | None = None,
+        api_key: Optional[str] = None,
+        temperature: Optional[float] = None,
         **kwargs
     ):
         super().__init__(model_name, **kwargs)
